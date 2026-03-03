@@ -16,19 +16,23 @@ export const schemas = z.object({
 
   // タスク進捗
   taskStatus:
-    z.enum(["not-started", "in-progress", "done"])
-    .or(z.literal(""))
-    .refine(v => v !== "", {
+    z.string()
+    .min(1, {
       message: "いずれかを選択して下さい"
-    }),
+    })
+    .refine(
+      v => ["not-started", "in-progress", "done"].includes(v)
+    ),
 
   // タスク優先度
   taskPriority:
-    z.enum(["low", "middle", "high"])
-    .or(z.literal(""))
-    .refine(v => v !== "", {
+    z.string()
+    .min(1, {
       message: "いずれかを選択して下さい"
-    }),
+    })
+    .refine(
+      v => ["low", "middle", "high"].includes(v)
+    ),
 
   // 期限
   dueDate:
