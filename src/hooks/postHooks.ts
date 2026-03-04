@@ -1,14 +1,15 @@
 "use client"
 
-import { createApi } from "@/api/postApi";
+import { postApi } from "@/api/postApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const createHooks = () => {
+export const postHooks = () => {
   // キャッシュ操作の準備
   const queryClient = useQueryClient();
+  console.log("hooks層");
 
   return useMutation({
-    mutationFn: createApi,
+    mutationFn: postApi,
 
     // キャッシュから再フェチ
     onSuccess: () => {

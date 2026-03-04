@@ -10,9 +10,12 @@ import Box from "@mui/material/Box";
 import { SelectBox } from "./selectBox";
 import { SubmitButton } from "./buttons";
 import { InputDate } from "./textDateForm";
+import Typography from "@mui/material/Typography";
+import { useStore } from "@/store/useStore";
+import { postHooks } from "@/hooks/postHooks";
 
 // スキーマとの連携
-type InputTask = z.infer<typeof schemas>;
+export type InputTask = z.infer<typeof schemas>;
 
 // 上記の型にidを追加
 type InputTaskType = InputTask & {
@@ -33,17 +36,42 @@ export const CreateTasks = () => {
     }
   });
 
-  // 登録ボタン押下後の処理
+  // フォームの初期値
+  const initialForm: InputTask = {
+    taskName: "",
+    taskDescription: "",
+    taskStatus: "",
+    taskPriority: "",
+    dueDate: ""
+  };
+
+  // ストアから取得
+  const { pageStatus } = useStore();
+
+  // postHooksの呼び出し
+  const post = postHooks();
+
+  /**
+   * 登録処理
+   * ①postHooksを呼び出す
+   * ②登録データをmutateに渡す
+   * ③登録完了後、フォームを初期化する
+   */
   const submit = (data: InputTask) => {
-    console.log(data);
+    post.mutate(data);
+    methods.reset(initialForm);
   };
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(submit)}>
         <Box
-          sx={{ width: 500 }}>
+          sx={{
+            width: 500,
+            p: 2
+          }}>
           <Stack direction="column" spacing={1}>
+            <Typography variant="h5">{pageStatus}画面</Typography>
             <InputForm<InputTask>
               name="taskName"
               label="タスク名"
