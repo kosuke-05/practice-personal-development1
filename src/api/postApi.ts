@@ -10,8 +10,6 @@ export const postApi = async (input: InputTask) => {
     body: JSON.stringify(input)
   });
 
-  console.log("API層")
-
   // API通信が失敗
   if(!res.ok) {
     throw new Error("登録処理に失敗しました。");

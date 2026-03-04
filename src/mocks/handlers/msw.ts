@@ -6,7 +6,6 @@ let tasks = [];
 
 export const handlers = [
   http.post("/api/task", async ({ request }) => {
-    console.log("MSW");
     // JSオブジェクトに変換
     const body = (await request.json()) as InputTask;
 
