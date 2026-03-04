@@ -2,7 +2,7 @@
 
 import { InputTask } from "@/components/createTask"
 
-export const createApi = async (input: InputTask) => {
+export const postApi = async (input: InputTask) => {
   // API通信
   const res = await fetch("/api/task", {
     method: "POST",

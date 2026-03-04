@@ -5,7 +5,7 @@ import { HttpResponse, http } from "msw"
 let tasks = [];
 
 export const handlers = [
-  http.post("/api/tasks", async ({ request }) => {
+  http.post("/api/task", async ({ request }) => {
     // JSオブジェクトに変換
     const body = (await request.json()) as InputTask;
 
