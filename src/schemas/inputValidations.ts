@@ -39,5 +39,22 @@ export const schemas = z.object({
     z.string()
     .refine(v => v !== "", {
       message: "提出期限を入力して下さい"
+    }),
+
+  // 社員名
+  employeeName:
+    z.string()
+    .min(2, {
+      message: "2文字以上入力して下さい"
+    }),
+
+  // 部署名
+  departmentName:
+    z.string()
+    .min(1, {
+      message: "いずれかを選択して下さい"
     })
+    .refine(
+      v => ["sales", "development", "accounting", "general-affairs"].includes(v)
+    )
 });
