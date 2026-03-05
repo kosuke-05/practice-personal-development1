@@ -1,8 +1,8 @@
-import { InputTask } from "@/components/createTask";
+import { InputTask, InputTaskType } from "@/components/createTask";
 import { HttpResponse, http } from "msw"
 
 // データ配列
-let tasks = [];
+let tasks: InputTaskType[] = [];
 
 export const handlers = [
   http.post("/api/task", async ({ request }) => {
@@ -17,5 +17,9 @@ export const handlers = [
 
     // JSオブジェクトに変換してreturn
     return HttpResponse.json(newTask, { status: 201 });
+  }),
+
+  http.get("/api/tasks", () => {
+    return HttpResponse.json(tasks)
   })
 ]

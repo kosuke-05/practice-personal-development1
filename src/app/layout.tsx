@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { MswProvider } from "@/providers/mswProvider";
 import { QueryClientComponent } from "@/providers/queryClientProvider";
+import { DrawerComponent } from "@/components/drawer";
+import Box from "@mui/material/Box";
+import { TaskContextProvider } from "@/providers/contextProvider";
 
 
 const geistSans = Geist({
@@ -30,7 +33,32 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <MswProvider>
           <QueryClientComponent>
-            {children}
+            <TaskContextProvider>
+              <Box
+                sx={{
+                  display: "flex",
+                  width: "100%"
+                  }}>
+                <Box
+                  component="div"
+                  sx={{
+                    width: 250
+                  }}>
+                  {/** ドロワー */}
+                  <DrawerComponent />
+                </Box>
+
+                <Box
+                  component="main"
+                  sx={{
+                    flexGrow: 1,
+                    p: 3,
+                    boxSizing: "border-box"
+                    }}>
+                  {children}
+                </Box>
+              </Box>
+            </TaskContextProvider>
           </QueryClientComponent>
         </MswProvider>
       </body>

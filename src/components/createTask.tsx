@@ -13,15 +13,16 @@ import { InputDate } from "./textDateForm";
 import Typography from "@mui/material/Typography";
 import { useStore } from "@/store/useStore";
 import { postHooks } from "@/hooks/postHooks";
+import { useContext } from "react";
+import { TaskContext } from "@/contexts/context";
 
 // スキーマとの連携
 export type InputTask = z.infer<typeof schemas>;
 
 // 上記の型にidを追加
-type InputTaskType = InputTask & {
+export type InputTaskType = InputTask & {
   id: string
 };
-
 export const CreateTasks = () => {
   // RHFと連携
   const methods = useForm<InputTask>({
@@ -45,8 +46,9 @@ export const CreateTasks = () => {
     dueDate: ""
   };
 
-  // ストアから取得
-  const { pageStatus } = useStore();
+  // コンテキストから取得
+  const context = useContext(TaskContext);
+  if(!context) return;
 
   // postHooksの呼び出し
   const post = postHooks();
@@ -62,6 +64,13 @@ export const CreateTasks = () => {
     methods.reset(initialForm);
   };
 
+  // ラベル
+  const PageStatusLabel = {
+    create: "登録",
+    edit: "編集",
+    normal: "通常"
+  };
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(submit)}>
@@ -71,7 +80,7 @@ export const CreateTasks = () => {
             p: 2
           }}>
           <Stack direction="column" spacing={1}>
-            <Typography variant="h5">{pageStatus}画面</Typography>
+            <Typography variant="h5">{PageStatusLabel[context.pageStatus]}画面</Typography>
             <InputForm<InputTask>
               name="taskName"
               label="タスク名"
