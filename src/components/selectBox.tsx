@@ -24,6 +24,12 @@ type SelectType =
     { value: "low", name: "低" },
     { value: "middle", name: "中" },
     { value: "high", name: "高" }
+  ]
+  | [
+    { value: "sales", name: "営業部" },
+    { value: "development", name: "開発部" },
+    { value: "accounting", name: "経理部" },
+    { value: "general-affairs", name: "総務部" }
   ];
 
 export const SelectBox = <T extends Record<string, any>>({
@@ -33,6 +39,9 @@ export const SelectBox = <T extends Record<string, any>>({
 }: SelectBoxType<T>) => {
   // RHFから取得
   const { control } = useFormContext<T>();
+
+  // 部署名の判別
+  const isDepartmentName = name === "departmentName";
 
   return (
     <Controller
@@ -44,7 +53,10 @@ export const SelectBox = <T extends Record<string, any>>({
           <InputLabel>{label}</InputLabel>
           <Select
             {...field}
-            displayEmpty>
+            displayEmpty
+            sx={{
+              width: isDepartmentName ? 230 : null
+            }}>
             <MenuItem value="">
               <em>以下いずれかを選択して下さい</em>
             </MenuItem>

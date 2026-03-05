@@ -15,6 +15,7 @@ import { useStore } from "@/store/useStore";
 import { postHooks } from "@/hooks/postHooks";
 import { useContext } from "react";
 import { TaskContext } from "@/contexts/context";
+import { useRouter } from "next/navigation";
 
 // スキーマとの連携
 export type InputTask = z.infer<typeof schemas>;
@@ -43,7 +44,9 @@ export const CreateTasks = () => {
     taskDescription: "",
     taskStatus: "",
     taskPriority: "",
-    dueDate: ""
+    dueDate: "",
+    employeeName: "",
+    departmentName: ""
   };
 
   // コンテキストから取得
@@ -53,15 +56,20 @@ export const CreateTasks = () => {
   // postHooksの呼び出し
   const post = postHooks();
 
+  // ルーターの取得
+  const router = useRouter();
+
   /**
    * 登録処理
    * ①postHooksを呼び出す
    * ②登録データをmutateに渡す
    * ③登録完了後、フォームを初期化する
+   * ③トップ画面に遷移
    */
   const submit = (data: InputTask) => {
     post.mutate(data);
     methods.reset(initialForm);
+    router.push("/");
   };
 
   // ラベル
@@ -108,6 +116,21 @@ export const CreateTasks = () => {
             <InputDate<InputTask>
               name="dueDate"
               label="提出期限" />
+            <Stack direction="row" spacing={2}>
+              <InputForm<InputTask>
+                name="employeeName"
+                label="社員名"
+                placeholder="営業太郎" />
+              <SelectBox<InputTask>
+                name="departmentName"
+                label="部署名"
+                array={[
+                  {value: "sales", name: "営業部"},
+                  {value: "development", name: "開発部"},
+                  {value: "accounting", name: "経理部"},
+                  {value: "general-affairs", name: "総務部"}
+                ]} />
+            </Stack>
             <SubmitButton />
           </Stack>
         </Box>
