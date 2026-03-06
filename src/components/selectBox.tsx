@@ -40,6 +40,9 @@ export const SelectBox = <T extends Record<string, any>>({
   // RHFから取得
   const { control } = useFormContext<T>();
 
+  // 部署名の判別
+  const isDepartmentName = name === "departmentName";
+
   return (
     <Controller
       name={name}
@@ -50,7 +53,10 @@ export const SelectBox = <T extends Record<string, any>>({
           <InputLabel>{label}</InputLabel>
           <Select
             {...field}
-            displayEmpty>
+            displayEmpty
+            sx={{
+              width: isDepartmentName ? 230 : null
+            }}>
             <MenuItem value="">
               <em>以下いずれかを選択して下さい</em>
             </MenuItem>
