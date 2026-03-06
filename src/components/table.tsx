@@ -1,5 +1,6 @@
 "use client"
 
+import { TaskPriority, TaskPriorityType, TaskStatus, TaskStatusType } from "@/constants/tableConstants";
 import { getHooks } from "@/hooks/getHooks"
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -21,20 +22,23 @@ export const TableComponent = () => {
       <Table>
         <TableHead>
           <TableRow>
+            <TableCell>社員名 / 部署名</TableCell>
             <TableCell>業務名</TableCell>
             <TableCell>業務説明</TableCell>
             <TableCell>進捗度</TableCell>
             <TableCell>優先度</TableCell>
             <TableCell>期限</TableCell>
+            <TableCell>オプション</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data?.map((item) => (
             <TableRow key={item.taskName}>
+              <TableCell>{item.employeeName} / {item.departmentName}</TableCell>
               <TableCell>{item.taskName}</TableCell>
               <TableCell>{item.taskDescription}</TableCell>
-              <TableCell>{item.taskStatus}</TableCell>
-              <TableCell>{item.taskPriority}</TableCell>
+              <TableCell>{TaskStatus[item.taskStatus as TaskStatusType]}</TableCell>
+              <TableCell>{TaskPriority[item.taskPriority as TaskPriorityType]}</TableCell>
               <TableCell>{item.dueDate}</TableCell>
             </TableRow>
           ))}
