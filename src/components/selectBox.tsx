@@ -16,8 +16,8 @@ type SelectBoxType<T> = {
 
 type SelectType =
   | [
-    { value: "not-started", name: "未着手" },
-    { value: "in-progress", name: "進行中" },
+    { value: "notStarted", name: "未着手" },
+    { value: "inProgress", name: "進行中" },
     { value: "done", name: "完了" }
   ]
   | [
@@ -29,7 +29,7 @@ type SelectType =
     { value: "sales", name: "営業部" },
     { value: "development", name: "開発部" },
     { value: "accounting", name: "経理部" },
-    { value: "general-affairs", name: "総務部" }
+    { value: "generalAffairs", name: "総務部" }
   ];
 
 export const SelectBox = <T extends Record<string, any>>({

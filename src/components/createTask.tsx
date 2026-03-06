@@ -101,8 +101,8 @@ export const CreateTasks = () => {
               name="taskStatus"
               label="進捗度"
               array={[
-                {value: "not-started", name: "未着手"},
-                {value: "in-progress", name: "進行中"},
+                {value: "notStarted", name: "未着手"},
+                {value: "inProgress", name: "進行中"},
                 {value: "done", name: "完了"}
               ]} />
             <SelectBox<InputTask>
@@ -128,7 +128,7 @@ export const CreateTasks = () => {
                   {value: "sales", name: "営業部"},
                   {value: "development", name: "開発部"},
                   {value: "accounting", name: "経理部"},
-                  {value: "general-affairs", name: "総務部"}
+                  {value: "generalAffairs", name: "総務部"}
                 ]} />
             </Stack>
             <SubmitButton />

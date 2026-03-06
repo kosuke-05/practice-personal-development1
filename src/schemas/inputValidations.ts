@@ -55,6 +55,6 @@ export const schemas = z.object({
       message: "いずれかを選択して下さい"
     })
     .refine(
-      v => ["sales", "development", "accounting", "general-affairs"].includes(v)
+      v => ["sales", "development", "accounting", "generalAffairs"].includes(v)
     )
 });

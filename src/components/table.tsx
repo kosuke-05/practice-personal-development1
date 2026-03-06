@@ -2,11 +2,13 @@
 
 import { TaskPriority, TaskPriorityType, TaskStatus, TaskStatusType } from "@/constants/tableConstants";
 import { getHooks } from "@/hooks/getHooks"
+import Stack from "@mui/material/Stack";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { EditButton } from "./buttons";
 
 /**
  * データ一覧をテーブルで描画
@@ -40,6 +42,9 @@ export const TableComponent = () => {
               <TableCell>{TaskStatus[item.taskStatus as TaskStatusType]}</TableCell>
               <TableCell>{TaskPriority[item.taskPriority as TaskPriorityType]}</TableCell>
               <TableCell>{item.dueDate}</TableCell>
+              <Stack direction="row" spacing={1}>
+                <EditButton />
+              </Stack>
             </TableRow>
           ))}
         </TableBody>
