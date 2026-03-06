@@ -21,7 +21,7 @@ export const schemas = z.object({
       message: "いずれかを選択して下さい"
     })
     .refine(
-      v => ["not-started", "in-progress", "done"].includes(v)
+      v => ["notStarted", "inProgress", "done"].includes(v)
     ),
 
   // タスク優先度
