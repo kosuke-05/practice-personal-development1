@@ -13,3 +13,14 @@ export const SubmitButton = () => {
     </Button>
   )
 }
+
+// 編集ボタン
+export const EditButton = () => {
+
+  return (
+    <Button
+      variant="contained">
+      編集
+    </Button>
+  )
+}

@@ -40,4 +40,10 @@ export const schemas = z.object({
     .refine(v => v !== "", {
       message: "提出期限を入力して下さい"
     })
+<<<<<<< Updated upstream
+=======
+    .refine(
+      v => ["sales", "development", "accounting", "generalAffairs"].includes(v)
+    )
+>>>>>>> Stashed changes
 });
