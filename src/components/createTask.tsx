@@ -99,8 +99,6 @@ export const CreateTasks = () => {
             <InputDate<InputTask>
               name="dueDate"
               label="提出期限" />
-<<<<<<< Updated upstream
-=======
             <Stack direction="row" spacing={2}>
               <InputForm<InputTask>
                 name="employeeName"
@@ -116,7 +114,6 @@ export const CreateTasks = () => {
                   {value: "generalAffairs", name: "総務部"}
                 ]} />
             </Stack>
->>>>>>> Stashed changes
             <SubmitButton />
           </Stack>
         </Box>

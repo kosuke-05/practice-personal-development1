@@ -24,15 +24,12 @@ type SelectType =
     { value: "low", name: "低" },
     { value: "middle", name: "中" },
     { value: "high", name: "高" }
-<<<<<<< Updated upstream
-=======
   ]
   | [
     { value: "sales", name: "営業部" },
     { value: "development", name: "開発部" },
     { value: "accounting", name: "経理部" },
     { value: "generalAffairs", name: "総務部" }
->>>>>>> Stashed changes
   ];
 
 export const SelectBox = <T extends Record<string, any>>({
