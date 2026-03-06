@@ -9,6 +9,8 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { EditButton } from "./buttons";
+import { useContext } from "react";
+import { TaskContext } from "@/contexts/context";
 
 /**
  * データ一覧をテーブルで描画
@@ -42,9 +44,16 @@ export const TableComponent = () => {
               <TableCell>{TaskStatus[item.taskStatus as TaskStatusType]}</TableCell>
               <TableCell>{TaskPriority[item.taskPriority as TaskPriorityType]}</TableCell>
               <TableCell>{item.dueDate}</TableCell>
-              <Stack direction="row" spacing={1}>
-                <EditButton />
-              </Stack>
+              <TableCell>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  sx={{
+                    alignItems: "center"
+                  }}>
+                  <EditButton />
+                </Stack>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
