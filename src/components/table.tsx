@@ -1,6 +1,6 @@
 "use client"
 
-import { TaskPriority, TaskPriorityType, TaskStatus, TaskStatusType } from "@/constants/tableConstants";
+import { DepartmentName, DepartmentNameType, TaskPriority, TaskPriorityType, TaskStatus, TaskStatusType } from "@/constants/tableConstants";
 import { getHooks } from "@/hooks/getHooks"
 import Stack from "@mui/material/Stack";
 import Table from "@mui/material/Table";
@@ -11,6 +11,9 @@ import TableRow from "@mui/material/TableRow";
 import { EditButton } from "./buttons";
 import { useContext } from "react";
 import { TaskContext } from "@/contexts/context";
+import { InputTaskType } from "./createTask";
+import { useFormContext } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 /**
  * データ一覧をテーブルで描画
@@ -20,6 +23,27 @@ import { TaskContext } from "@/contexts/context";
 export const TableComponent = () => {
   // hooksから取得
   const { data } = getHooks();
+
+  // コンテキストから取得
+  const context = useContext(TaskContext);
+  if(!context) return;
+
+  // ルーターを取得
+  const router = useRouter();
+
+  /**
+   * 編集ボタン押下後の処理
+   * ①ページステータスをeditに更新
+   * ②編集対象のidをstateに渡す
+   * ③編集対象のデータをstateに渡す
+   * ③編集画面に遷移（登録画面と使い回し）
+   */
+  const handleEdit = (item: InputTaskType) => {
+    context.setPageStatus("edit");
+    // context.setDataId(item.id);
+    context.setEditData(item);
+    router.push("/create");
+  };
 
   return (
     <>
@@ -38,7 +62,7 @@ export const TableComponent = () => {
         <TableBody>
           {data?.map((item) => (
             <TableRow key={item.taskName}>
-              <TableCell>{item.employeeName} / {item.departmentName}</TableCell>
+              <TableCell>{item.employeeName} / {DepartmentName[item.departmentName as DepartmentNameType]}</TableCell>
               <TableCell>{item.taskName}</TableCell>
               <TableCell>{item.taskDescription}</TableCell>
               <TableCell>{TaskStatus[item.taskStatus as TaskStatusType]}</TableCell>
@@ -51,7 +75,7 @@ export const TableComponent = () => {
                   sx={{
                     alignItems: "center"
                   }}>
-                  <EditButton />
+                  <EditButton item={item} handleEdit={handleEdit} />
                 </Stack>
               </TableCell>
             </TableRow>

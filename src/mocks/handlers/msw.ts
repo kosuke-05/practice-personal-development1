@@ -21,5 +21,18 @@ export const handlers = [
 
   http.get("/api/tasks", () => {
     return HttpResponse.json(tasks)
+  }),
+
+  http.put("/api/task/:id", async ({ params, request }) => {
+    const body = (await request.json()) as InputTaskType;
+
+    // idが合致するデータを検索
+    tasks = tasks.map(
+      t => t.id === params.id
+      ? {...t, ...body}
+      : t
+    );
+
+    return HttpResponse.json({ ok : true });
   })
 ]
