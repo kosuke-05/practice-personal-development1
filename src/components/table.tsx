@@ -8,7 +8,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { EditButton } from "./buttons";
+import { DeleteButton, EditButton } from "./buttons";
 import { useContext } from "react";
 import { TaskContext } from "@/contexts/context";
 import { InputTaskType } from "./createTask";
@@ -76,6 +76,7 @@ export const TableComponent = () => {
                     alignItems: "center"
                   }}>
                   <EditButton item={item} handleEdit={handleEdit} />
+                  <DeleteButton />
                 </Stack>
               </TableCell>
             </TableRow>
