@@ -1,6 +1,6 @@
 "use client"
 
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import * as z from "zod"
 import { schemas } from "@/schemas/inputValidations";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,9 +13,10 @@ import { InputDate } from "./textDateForm";
 import Typography from "@mui/material/Typography";
 import { useStore } from "@/store/useStore";
 import { postHooks } from "@/hooks/postHooks";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { TaskContext } from "@/contexts/context";
 import { useRouter } from "next/navigation";
+import { putHooks } from "@/hooks/putHooks";
 
 // スキーマとの連携
 export type InputTask = z.infer<typeof schemas>;
@@ -51,13 +52,22 @@ export const CreateTasks = () => {
 
   // コンテキストから取得
   const context = useContext(TaskContext);
-  if(!context) return;
+  if(!context) {
+    throw new Error("コンテキストが見つかりません");
+  }
 
-  // postHooksの呼び出し
+  // hooksの呼び出し
   const post = postHooks();
+  const put = putHooks();
 
   // ルーターの取得
   const router = useRouter();
+
+  // create, editによって、呼び出す関数を分岐する
+  const submit = (data: InputTask) => {
+    if(context.pageStatus === "create") postSubmit(data);
+    if(context.pageStatus === "edit") putSubmit(data);
+  };
 
   /**
    * 登録処理
@@ -66,10 +76,29 @@ export const CreateTasks = () => {
    * ③登録完了後、フォームを初期化する
    * ③トップ画面に遷移
    */
-  const submit = (data: InputTask) => {
+  const postSubmit = (data: InputTask) => {
     post.mutate(data);
     methods.reset(initialForm);
     router.push("/");
+  }
+
+  /**
+   * 編集処理
+   * ①putHooksを取得
+   * ②コンテキストで管理しているidもhooks呼び出しの際に渡す
+   * ③編集処理完了後、トップページに遷移
+   * ④ページステータスをnormalに更新
+   * ⑤フォーム内容もリセット
+   */
+  const putSubmit = (data: InputTask) => {
+    put.mutate(
+      {
+        id: context.editData.id,
+        input: data
+      });
+    router.push("/");
+    methods.reset(initialForm);
+    context.setPageStatus("normal");
   };
 
   // ラベル
@@ -78,6 +107,21 @@ export const CreateTasks = () => {
     edit: "編集",
     normal: "通常"
   };
+
+  /**
+   * 登録処理・編集処理の分岐
+   * ①登録処理　→　フォームは初期値
+   * ②編集処理　→　フォームは前回データを引き継ぐ
+   */
+  useEffect(() => {
+    if(context.pageStatus === "create") {
+      methods.reset(initialForm);
+    }
+
+    if(context.pageStatus === "edit") {
+      methods.reset(context.editData);
+    }
+  }, [context.pageStatus]);
 
   return (
     <FormProvider {...methods}>
