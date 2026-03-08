@@ -40,3 +40,14 @@ export const EditButton = (
     </Button>
   )
 }
+
+// 削除ボタン
+export const DeleteButton = () => {
+
+  return (
+    <Button
+      variant="contained">
+      削除
+    </Button>
+  )
+}
