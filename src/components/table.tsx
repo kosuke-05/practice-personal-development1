@@ -16,6 +16,7 @@ import { useFormContext } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { DialogComponent } from "./dialog";
 import { deleteHooks } from "@/hooks/deleteHooks";
+import dayjs from "dayjs";
 
 /**
  * データ一覧をテーブルで描画
@@ -107,7 +108,13 @@ export const TableComponent = () => {
               <TableCell>{item.taskDescription}</TableCell>
               <TableCell>{TaskStatus[item.taskStatus as TaskStatusType]}</TableCell>
               <TableCell>{TaskPriority[item.taskPriority as TaskPriorityType]}</TableCell>
-              <TableCell>{item.dueDate}</TableCell>
+              <TableCell
+                sx={{
+                  color:
+                    dayjs(item.dueDate).isSame(dayjs(), "day")
+                    ? "red"
+                    : "black"
+                }}>{item.dueDate}</TableCell>
               <TableCell>
                 <Stack
                   direction="row"
