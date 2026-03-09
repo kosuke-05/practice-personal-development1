@@ -3,7 +3,7 @@
 import { TaskContext } from "@/contexts/context"
 import Button from "@mui/material/Button"
 import { useRouter } from "next/navigation"
-import { useContext } from "react"
+import { Dispatch, SetStateAction, useContext } from "react"
 import { useFormContext } from "react-hook-form"
 import { InputTaskType } from "./createTask"
 
@@ -42,12 +42,55 @@ export const EditButton = (
 }
 
 // 削除ボタン
-export const DeleteButton = () => {
+type DeleteButtonType = {
+  onClick: () => void
+};
+
+export const DeleteButton = ({
+  onClick
+}: DeleteButtonType) => {
 
   return (
     <Button
-      variant="contained">
+      variant="contained"
+      onClick={onClick}>
       削除
     </Button>
   )
-}
+};
+
+// 削除【はい】ボタン
+type DeleteYesButtonType = {
+  onClick: () => void
+};
+
+export const DeleteYesButton = ({
+  onClick
+}: DeleteYesButtonType) => {
+
+  return (
+    <Button
+      variant="contained"
+      onClick={onClick}>
+      はい
+    </Button>
+  )
+};
+
+// 削除【いいえ】ボタン
+type DeleteNoButtonType = {
+  onClick: () => void
+};
+
+export const DeleteNoButton = ({
+  onClick
+}: DeleteNoButtonType) => {
+
+  return (
+    <Button
+      variant="contained"
+      onClick={onClick}>
+      いいえ
+    </Button>
+  )
+};
