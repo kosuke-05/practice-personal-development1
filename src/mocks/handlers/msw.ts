@@ -20,7 +20,7 @@ export const handlers = [
   }),
 
   http.get("/api/tasks", () => {
-    return HttpResponse.json(tasks)
+    return HttpResponse.json(tasks, { status: 200 });
   }),
 
   http.put("/api/task/:id", async ({ params, request }) => {
@@ -33,6 +33,12 @@ export const handlers = [
       : t
     );
 
-    return HttpResponse.json({ ok : true });
+    return HttpResponse.json(body, { status: 200 });
+  }),
+
+  http.delete("/api/task/:id", async ({ params }) => {
+    tasks = tasks.filter(t => t.id !== params.id);
+
+    return new HttpResponse(null, { status: 204 });
   })
-]
+];
