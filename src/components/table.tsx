@@ -17,6 +17,9 @@ import { useRouter } from "next/navigation";
 import { DialogComponent } from "./dialog";
 import { deleteHooks } from "@/hooks/deleteHooks";
 import dayjs from "dayjs";
+import { SearchComponent } from "./search";
+import { AppBarComponent } from "./appbar";
+import Toolbar from "@mui/material/Toolbar";
 
 /**
  * データ一覧をテーブルで描画
@@ -88,7 +91,13 @@ export const TableComponent = () => {
 
   return (
     <>
-      <Table>
+      {/** AppBar */}
+      <AppBarComponent />
+
+      <Table
+        sx={{
+          mt: "64px"
+        }}>
         <TableHead>
           <TableRow>
             <TableCell>社員名 / 部署名</TableCell>
