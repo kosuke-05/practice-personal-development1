@@ -94,3 +94,14 @@ export const DeleteNoButton = ({
     </Button>
   )
 };
+
+// 検索ボタン
+export const SearchButton = () => {
+
+  return (
+    <Button
+      variant="contained">
+      検索
+    </Button>
+  )
+}
