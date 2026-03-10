@@ -63,7 +63,9 @@ export const DrawerComponent = () => {
       PaperProps={{
         sx: {
           width: 250,
-          p: 1
+          p: 1,
+          flexShrink: 0,
+          mt: "64px"
         }
       }}>
       <List>
