@@ -26,7 +26,13 @@ import Toolbar from "@mui/material/Toolbar";
  * ①hooks層を読んでデータを取得
  * ②テーブル上で取得データを展開
  */
-export const TableComponent = () => {
+type TableType = {
+  tasks: InputTaskType[] | undefined
+};
+
+export const TableComponent = ({
+  tasks
+}: TableType) => {
   // hooksから取得
   const { data } = getHooks();
   const delHook = deleteHooks();
@@ -43,6 +49,13 @@ export const TableComponent = () => {
 
   // 削除対象データのidを管理
   const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  /**
+   * 検索結果が存在するかの判定
+   * ①検索結果が存在　→　検索結果を優先
+   * ②存在しない　→　全件取得
+   */
+  const getData = tasks ?? data;
 
   /**
    * 編集ボタン押下後の処理
@@ -91,9 +104,6 @@ export const TableComponent = () => {
 
   return (
     <>
-      {/** AppBar */}
-      <AppBarComponent />
-
       <Table
         sx={{
           mt: "64px"
@@ -110,7 +120,7 @@ export const TableComponent = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data?.map((item) => (
+          {getData?.map((item) => (
             <TableRow key={item.id}>
               <TableCell>{item.employeeName} / {DepartmentName[item.departmentName as DepartmentNameType]}</TableCell>
               <TableCell>{item.taskName}</TableCell>
