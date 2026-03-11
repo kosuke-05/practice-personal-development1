@@ -23,6 +23,30 @@ export const handlers = [
     return HttpResponse.json(tasks, { status: 200 });
   }),
 
+  http.get("/api/task", ({ request }) => {
+    // api層のURLを取得
+    const url = new URL(request.url);
+
+    // 社員名・部署名を取得
+    const employeeName = url.searchParams.get("employeeName") ?? "";
+    const departmentName = url.searchParams.get("departmentName") ?? "";
+
+    // 配列から該当したデータを取得
+    const result = tasks.filter(
+      t => {
+        const matchEmployeeName =
+          !employeeName || t.employeeName.includes(employeeName);
+
+        const matchDepartmentName =
+          !departmentName || t.departmentName.includes(departmentName);
+
+        return matchEmployeeName && matchDepartmentName;
+      }
+    );
+
+    return HttpResponse.json(result, { status: 200 });
+  }),
+
   http.put("/api/task/:id", async ({ params, request }) => {
     const body = (await request.json()) as InputTaskType;
 
