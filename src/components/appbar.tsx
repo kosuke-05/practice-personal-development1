@@ -3,12 +3,13 @@
 import AppBar from "@mui/material/AppBar"
 import Toolbar from "@mui/material/Toolbar"
 import { useState } from "react";
-import { SearchTextField } from "./searchTextForm";
-import { SearchSelectBox } from "./searchSelectBox";
+import { SearchTextField } from "./search/searchTextForm";
+import { SearchSelectBox } from "./search/searchSelectBox";
 import { keyof } from "zod";
 import { DepartmentName, DepartmentNameType } from "@/constants/tableConstants";
 import Stack from "@mui/material/Stack";
 import { SearchButton } from "./buttons";
+import { searchGetHooks } from "@/hooks/search/searchHooks";
 
 // AppBar
 export type SearchType = {
@@ -23,6 +24,17 @@ export const AppBarComponent = () => {
     departmentName: ""
   });
 
+  // hooksの呼び出し
+  const { data, refetch } = searchGetHooks(matchData.employeeName, matchData.departmentName);
+
+  /**
+   * 検索ボタン押下後の処理
+   * ①state値をgetHookに渡す
+   */
+  const handleSearch = () => {
+    refetch();
+  }
+
   return (
     <AppBar
       position="fixed">
@@ -34,7 +46,7 @@ export const AppBarComponent = () => {
           <SearchSelectBox
             matchData={matchData}
             setMatchData={setMatchData} />
-          <SearchButton />
+          <SearchButton onClick={handleSearch} />
         </Stack>
       </Toolbar>
     </AppBar>

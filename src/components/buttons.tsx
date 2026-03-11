@@ -96,11 +96,22 @@ export const DeleteNoButton = ({
 };
 
 // 検索ボタン
-export const SearchButton = () => {
+type SearchButtonType = {
+  onClick: () => void
+};
+
+export const SearchButton = ({
+  onClick
+}: SearchButtonType) => {
 
   return (
     <Button
-      variant="contained">
+      variant="contained"
+      onClick={onClick}
+      sx={{
+        bgcolor: "#fafafa",
+        color: "#212121"
+      }}>
       検索
     </Button>
   )
