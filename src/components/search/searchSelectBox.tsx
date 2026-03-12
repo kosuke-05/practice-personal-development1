@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { DepartmentName, DepartmentNameType } from "@/constants/tableConstants";
-import { SearchType } from "../appbar";
+import { SearchType } from "../appBar";
 
 
 // 検索用のセレクトボックス
