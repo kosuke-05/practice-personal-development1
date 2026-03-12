@@ -80,7 +80,8 @@ export const CreateTasks = () => {
     post.mutate(data);
     methods.reset(initialForm);
     router.push("/");
-  }
+    context.setPageStatus("normal");
+  };
 
   /**
    * 編集処理
