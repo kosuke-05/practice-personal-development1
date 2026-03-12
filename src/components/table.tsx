@@ -18,7 +18,6 @@ import { DialogComponent } from "./dialog";
 import { deleteHooks } from "@/hooks/deleteHooks";
 import dayjs from "dayjs";
 import { SearchComponent } from "./search/search";
-import { AppBarComponent } from "./appbar";
 import Toolbar from "@mui/material/Toolbar";
 
 /**

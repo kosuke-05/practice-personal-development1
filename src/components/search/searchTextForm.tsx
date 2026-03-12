@@ -3,7 +3,7 @@
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { Dispatch, SetStateAction } from "react";
-import { SearchType } from "../appbar";
+import { SearchType } from "../appBar";
 
 // 検索用のテキストフォーム
 type PropsType = {
