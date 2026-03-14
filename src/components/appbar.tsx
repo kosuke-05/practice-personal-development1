@@ -23,25 +23,16 @@ export type SearchType = {
 type AppBarType = {
   matchData: SearchType,
   setMatchData: Dispatch<SetStateAction<SearchType>>,
-  handleSearch: () => void
+  handleSearch: () => void,
+  setOpenUserDialog: Dispatch<SetStateAction<boolean>>
 };
 
 export const AppBarComponent = ({
   matchData,
   setMatchData,
-  handleSearch
+  handleSearch,
+  setOpenUserDialog
 }: AppBarType) => {
-  /**
-   * 新規登録ボタン押下後の処理
-   * ①新規登録ダイアログを表示
-   * ②ダイアログ上でメールアドレス・パスワードを入力
-   * ③②の情報をAPI通信でmswに登録
-   * ④完了後、ダイアログを閉じる
-   * ⑥【ログイン】の文言をユーザー名に変更（登録完了に伴い自動ログインしている状態）
-   */
-  const handleUserCreate = () => {
-
-  }
 
 
   return (
@@ -59,7 +50,7 @@ export const AppBarComponent = ({
           <SearchButton onClick={handleSearch} />
         </Stack>
         <UserButton
-          handleUserCreate={handleUserCreate} />
+          setOpenUserDialog={setOpenUserDialog} />
       </Toolbar>
     </AppBar>
   )

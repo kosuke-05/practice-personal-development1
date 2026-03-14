@@ -3,7 +3,8 @@
 import { TableComponent } from "./table";
 import { useState } from "react";
 import { searchGetHooks } from "@/hooks/search/searchHooks";
-import { AppBarComponent, SearchType } from "./appBar";
+import { AppBarComponent, SearchType } from "./appbar";
+import { UserRegisterDialog } from "./user/userRegisterDialog";
 
 /**
  * 一覧画面
@@ -25,6 +26,17 @@ export const TopPage = () => {
     matchData.departmentName
   );
 
+  // ユーザー新規登録ダイアログの状態管理
+  const [openUserDialog, setOpenUserDialog] = useState<boolean>(false);
+
+  /**
+   * ユーザー新規登録時に登録する項目
+   * ①社員名
+   * ②部署名
+   * ③メールアドレス
+   * ④
+   */
+
   /**
    * 検索ボタン押下後の処理
    * ①state値をgetHookに渡す
@@ -38,6 +50,16 @@ export const TopPage = () => {
     // })
   };
 
+  /**
+   * 新規登録ボタン押下後の処理
+   * ①新規登録ダイアログを表示
+   * ②ダイアログ上で社員名・部署名・メールアドレス・パスワードを入力
+   * ③②の情報をAPI通信でmswに登録
+   * ④完了後、ダイアログを閉じる
+   * ⑥【ログイン】の文言をユーザー名に変更（登録完了に伴い自動ログインしている状態）
+   */
+
+  
   return (
     <>
       {/** テーブル */}
@@ -48,7 +70,13 @@ export const TopPage = () => {
       <AppBarComponent
         matchData={matchData}
         setMatchData={setMatchData}
-        handleSearch={handleSearch} />
+        handleSearch={handleSearch}
+        setOpenUserDialog={setOpenUserDialog} />
+
+      {/** 新規登録ダイアログ */}
+      <UserRegisterDialog
+        openUserDialog={openUserDialog}
+        setOpenUserDialog={setOpenUserDialog} />
     </>
   )
 };
