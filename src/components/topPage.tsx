@@ -30,14 +30,6 @@ export const TopPage = () => {
   const [openUserDialog, setOpenUserDialog] = useState<boolean>(false);
 
   /**
-   * ユーザー新規登録時に登録する項目
-   * ①社員名
-   * ②部署名
-   * ③メールアドレス
-   * ④
-   */
-
-  /**
    * 検索ボタン押下後の処理
    * ①state値をgetHookに渡す
    * ②検索完了後、stateを初期化
