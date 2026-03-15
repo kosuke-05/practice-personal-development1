@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { Dispatch, SetStateAction } from "react";
+import { UserCreateOrLogin } from "../topPage";
 
 /**
  * AppBar上に配置
@@ -11,18 +12,30 @@ import { Dispatch, SetStateAction } from "react";
  * →　ボタン押下後の処理等は責務分離の関係でappBar内に定義する
  */
 type UserButtonType = {
-  setOpenUserDialog: Dispatch<SetStateAction<boolean>>
+  handleCreateUser: () => void,
+  handleLogin: () => void
 };
 
 export const UserButton = ({
-  setOpenUserDialog
+  handleCreateUser,
+  handleLogin
 }: UserButtonType) => {
 
   return (
     <Box component="div">
       <Stack direction="row" spacing={1}>
-        <Button variant="text" sx={{ color: "white" }} onClick={() => setOpenUserDialog(true)}>新規登録</Button>
-        <Button variant="text" sx={{ color: "white" }}>ログイン</Button>
+        <Button
+          variant="text"
+          sx={{ color: "white" }}
+          onClick={handleCreateUser}>
+          新規登録
+        </Button>
+        <Button
+          variant="text"
+          sx={{ color: "white" }}
+          onClick={handleLogin}>
+          ログイン
+        </Button>
         <Button variant="text" sx={{ color: "white" }}>ログアウト</Button>
       </Stack>
     </Box>

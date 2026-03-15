@@ -6,15 +6,22 @@ import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction, useContext } from "react"
 import { useFormContext } from "react-hook-form"
 import { InputTaskType } from "./createTask"
+import { UserCreateOrLogin } from "./topPage"
 
 // フォーム入力後の送信ボタン
-export const SubmitButton = () => {
+type SubmitButtonType = {
+  userStatus: UserCreateOrLogin | ""
+};
+
+export const SubmitButton = ({
+  userStatus
+}: SubmitButtonType) => {
 
   return (
     <Button
       variant="contained"
       type="submit">
-      登録
+      {userStatus === "userCreate" ? "登録" : "ログイン"}
     </Button>
   )
 }
