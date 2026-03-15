@@ -18,6 +18,10 @@ import { Controller, useForm } from "react-hook-form";
 import z from "zod";
 import { SubmitButton } from "../buttons";
 import { postUserHooks } from "@/hooks/user/postUserHooks";
+import { UserCreateOrLogin } from "../topPage";
+import Button from "@mui/material/Button";
+import { postUserLoginHooks } from "@/hooks/user/postUserLoginHooks";
+import { postHooks } from "@/hooks/postHooks";
 
 /**
  * ユーザー新規登録のダイアログ
@@ -25,15 +29,22 @@ import { postUserHooks } from "@/hooks/user/postUserHooks";
  */
 type UserRegisterDialogType = {
   openUserDialog: boolean,
-  setOpenUserDialog: Dispatch<SetStateAction<boolean>>
+  setOpenUserDialog: Dispatch<SetStateAction<boolean>>,
+  userStatus: UserCreateOrLogin | "",
+  setUserStatus: Dispatch<SetStateAction<UserCreateOrLogin | "">>
 };
 
 // スキーマとの同期
 export type UserValidationType = z.infer<typeof userRegisterSchema>;
 
+// ログイン情報
+export type LoginType = Omit<UserValidationType, "employeeName" | "departmentName">;
+
 export const UserRegisterDialog = ({
   openUserDialog,
-  setOpenUserDialog
+  setOpenUserDialog,
+  userStatus,
+  setUserStatus
 }: UserRegisterDialogType) => {
   // RHF
   const userMethods = useForm<UserValidationType>({
@@ -72,9 +83,7 @@ export const UserRegisterDialog = ({
    * ③合致したらログイン成功
    */
   const registerStart = (data: UserValidationType) => {
-    console.log("テスト");
     userHook.mutate(data);
-
     completeRegister();
   };
 
@@ -155,8 +164,16 @@ export const UserRegisterDialog = ({
                 error={fieldState.invalid}
                 helperText={fieldState.error?.message} />
             )} />
-          <SubmitButton />
+          <SubmitButton
+            userStatus={userStatus} />
         </Stack>
+        {/* {userStatus === "userLogin" && (
+          <Button
+            variant="text"
+            onClick={() => setUserStatus("userCreate")}>
+            新規登録していない方はこちらから
+          </Button>
+        )} */}
       </DialogContent>
     </Dialog>
   )

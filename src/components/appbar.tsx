@@ -13,6 +13,7 @@ import { searchGetHooks } from "@/hooks/search/searchHooks";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { UserButton } from "./user/userButton";
+import { UserCreateOrLogin } from "./topPage";
 
 // AppBar
 export type SearchType = {
@@ -24,16 +25,38 @@ type AppBarType = {
   matchData: SearchType,
   setMatchData: Dispatch<SetStateAction<SearchType>>,
   handleSearch: () => void,
-  setOpenUserDialog: Dispatch<SetStateAction<boolean>>
+  setOpenUserDialog: Dispatch<SetStateAction<boolean>>,
+  setUserStatus: Dispatch<SetStateAction<UserCreateOrLogin | "">>,
+  setOpenUserLoginDialog: Dispatch<SetStateAction<boolean>>
 };
 
 export const AppBarComponent = ({
   matchData,
   setMatchData,
   handleSearch,
-  setOpenUserDialog
+  setOpenUserDialog,
+  setUserStatus,
+  setOpenUserLoginDialog
 }: AppBarType) => {
+  /**
+   * 新規登録ボタン押下後の処理
+   * ①ステータスをuserCreateに更新
+   * ②新規登録ダイアログを開く
+   */
+  const handleCreateUser = () => {
+    setUserStatus("userCreate");
+    setOpenUserDialog(true);
+  };
 
+  /**
+   * ログインボタン押下後の処理
+   * ①ステータスをuserLoginに更新
+   * ②ログインダイアログを開く
+   */
+  const handleLogin = () => {
+    setUserStatus("userLogin");
+    setOpenUserLoginDialog(true);
+  };
 
   return (
     <AppBar
@@ -50,8 +73,9 @@ export const AppBarComponent = ({
           <SearchButton onClick={handleSearch} />
         </Stack>
         <UserButton
-          setOpenUserDialog={setOpenUserDialog} />
+          handleCreateUser={handleCreateUser}
+          handleLogin={handleLogin} />
       </Toolbar>
     </AppBar>
   )
-}
+};
