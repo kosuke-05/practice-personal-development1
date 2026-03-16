@@ -2,7 +2,7 @@
 
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { ReactNode, useContext } from "react";
+import { ReactNode, useContext, useState } from "react";
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -13,6 +13,9 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { TaskContext } from "@/contexts/context";
 import { useRouter } from "next/navigation";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useStore } from "@/store/useStore";
+import { PromptLoginDialog } from "./detail/promptLoginDialog";
 
 // メニュー型
 type drawerMenu = {
@@ -35,12 +38,35 @@ export const DrawerComponent = () => {
   // ルーターの取得
   const router = useRouter();
 
+  // ストアから取得
+  const loginData = useStore((state) => state.loginData);
+
+  // ログインを促すダイアログの開閉状態
+  const [openPromptLoginDialog, setOpenPromptLoginDialog] = useState<boolean>(false);
+
   /**
    * ドロワーメニュー一覧
    * ・ホーム（一覧画面） 
    * ・新規登録
+   *
+   * ・詳細
+   * ①ログイン情報が存在するかの判定
+   * --- 情報が存在する場合 ---
+   * ・社員名・部署名で照合とる
+   * 
+   * --- 情報が存在しない場合 ---
+   * ・ログインするように促す（ダイアログの開閉状態をtrueにする）
+   * 
    * ・設定
    */
+  const handleDetail = () => {
+    if(loginData) {
+      router.push("/detail");
+    } else {
+      setOpenPromptLoginDialog(true);
+    }
+  }
+
   const menuList: drawerMenu[] = [
     { name: "ホーム（一覧画面）", icon: <HomeIcon />,
       action: () => {
@@ -53,38 +79,50 @@ export const DrawerComponent = () => {
         context.setPageStatus("create");
         router.push("/create");
       }},
+    { name: "詳細", icon: <AccountCircleIcon />,
+      action: () => {
+        handleDetail()
+      }
+    },
     { name: "設定", path: "/", icon: <SettingsIcon /> }
   ];
 
   return (
-    <Drawer
-      open={isDesktop}
-      variant={isDesktop ? "permanent" : "temporary"}
-      PaperProps={{
-        sx: {
-          width: 250,
-          p: 1,
-          flexShrink: 0,
-          mt: "64px"
-        }
-      }}>
-      <List>
-        {menuList.map((item) => (
-          <ListItemButton
-            key={item.name}
-            onClick={() => {
-                if(item.action) {
-                  item.action();
-                } else if(item.path) {
-                  router.push(item.path);
+    <>
+      <Drawer
+        open={isDesktop}
+        variant={isDesktop ? "permanent" : "temporary"}
+        PaperProps={{
+          sx: {
+            width: 250,
+            p: 1,
+            flexShrink: 0,
+            mt: "64px"
+          }
+        }}>
+        <List>
+          {menuList.map((item) => (
+            <ListItemButton
+              key={item.name}
+              onClick={() => {
+                  if(item.action) {
+                    item.action();
+                  } else if(item.path) {
+                    router.push(item.path);
+                  }
                 }
-              }
-            }>
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.name} />
-          </ListItemButton>
-        ))}
-      </List>
-    </Drawer>
+              }>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.name} />
+            </ListItemButton>
+          ))}
+        </List>
+      </Drawer>
+
+      {/** ログインを促すダイアログ */}
+      <PromptLoginDialog
+        openPromptLoginDialog={openPromptLoginDialog}
+        setOpenPromptLoginDialog={setOpenPromptLoginDialog} />
+    </>
   )
 };
