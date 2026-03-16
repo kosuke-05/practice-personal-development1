@@ -6,6 +6,8 @@ import { searchGetHooks } from "@/hooks/search/searchHooks";
 import { AppBarComponent, SearchType } from "./appbar";
 import { UserRegisterDialog } from "./user/userRegisterDialog";
 import { UserLoginDialog } from "./user/userLoginDialog";
+import { UserLogoutDialog } from "./user/userLogoutDialog";
+import { useStore } from "@/store/useStore";
 
 /**
  * 一覧画面
@@ -38,6 +40,12 @@ export const TopPage = () => {
   // ログインダイアログの開閉状態
   const [openUserLoginDialog, setOpenUserLoginDialog] = useState<boolean>(false);
 
+  // ログアウトダイアログの開閉状態
+  const [openUserLogoutDialog, setOpenUserLogoutDialog] = useState<boolean>(false);
+
+  // ストアから取得
+  const deleteLoginData = useStore((state) => state.deleteLoginData);
+
   /**
    * 検索ボタン押下後の処理
    * ①state値をgetHookに渡す
@@ -45,6 +53,26 @@ export const TopPage = () => {
    */
   const handleSearch = () => {
     refetch();
+  };
+
+  /**
+   * 【新規登録が完了していない方はこちら】を押下後の処理
+   * ①ログインダイアログの状態をfalseにする
+   * ②新規登録ダイアログの状態をtrueにする
+   */
+  const toggleDialog = () => {
+    setOpenUserLoginDialog(false)
+    setOpenUserDialog(true);
+  };
+
+  /**
+   * ログアウト確認ダイアログで【はい】押下後の処理
+   * ①ストアのdeleteLoginDataを呼び出す
+   * ②ダイアログを閉じる
+   */
+  const handleLogoutYes = () => {
+    deleteLoginData();
+    setOpenUserLogoutDialog(false);
   };
 
   return (
@@ -60,7 +88,8 @@ export const TopPage = () => {
         handleSearch={handleSearch}
         setOpenUserDialog={setOpenUserDialog}
         setUserStatus={setUserStatus}
-        setOpenUserLoginDialog={setOpenUserLoginDialog} />
+        setOpenUserLoginDialog={setOpenUserLoginDialog}
+        setOpenUserLogoutDialog={setOpenUserLogoutDialog} />
 
       {/** 新規登録ダイアログ */}
       <UserRegisterDialog
@@ -72,8 +101,16 @@ export const TopPage = () => {
       {/** ログインダイアログ */}
       <UserLoginDialog
         userStatus={userStatus}
+        setOpenUserDialog={setOpenUserDialog}
         openUserLoginDialog={openUserLoginDialog}
-        setOpenUserLoginDialog={setOpenUserLoginDialog} />
+        setOpenUserLoginDialog={setOpenUserLoginDialog}
+        toggleDialog={toggleDialog} />
+
+      {/** ログアウトダイアログ */}
+      <UserLogoutDialog
+        openUserLogoutDialog={openUserLogoutDialog}
+        setOpenUserLogoutDialog={setOpenUserLogoutDialog}
+        handleLogoutYes={handleLogoutYes} />
     </>
   )
 };

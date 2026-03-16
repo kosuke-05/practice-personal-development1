@@ -27,7 +27,8 @@ type AppBarType = {
   handleSearch: () => void,
   setOpenUserDialog: Dispatch<SetStateAction<boolean>>,
   setUserStatus: Dispatch<SetStateAction<UserCreateOrLogin | "">>,
-  setOpenUserLoginDialog: Dispatch<SetStateAction<boolean>>
+  setOpenUserLoginDialog: Dispatch<SetStateAction<boolean>>,
+  setOpenUserLogoutDialog: Dispatch<SetStateAction<boolean>>
 };
 
 export const AppBarComponent = ({
@@ -36,7 +37,8 @@ export const AppBarComponent = ({
   handleSearch,
   setOpenUserDialog,
   setUserStatus,
-  setOpenUserLoginDialog
+  setOpenUserLoginDialog,
+  setOpenUserLogoutDialog
 }: AppBarType) => {
   /**
    * 新規登録ボタン押下後の処理
@@ -74,7 +76,8 @@ export const AppBarComponent = ({
         </Stack>
         <UserButton
           handleCreateUser={handleCreateUser}
-          handleLogin={handleLogin} />
+          handleLogin={handleLogin}
+          setOpenUserLogoutDialog={setOpenUserLogoutDialog} />
       </Toolbar>
     </AppBar>
   )
