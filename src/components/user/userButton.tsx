@@ -5,6 +5,8 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { Dispatch, SetStateAction } from "react";
 import { UserCreateOrLogin } from "../topPage";
+import { useStore } from "@/store/useStore";
+import Typography from "@mui/material/Typography";
 
 /**
  * AppBar上に配置
@@ -13,30 +15,54 @@ import { UserCreateOrLogin } from "../topPage";
  */
 type UserButtonType = {
   handleCreateUser: () => void,
-  handleLogin: () => void
+  handleLogin: () => void,
+  setOpenUserLogoutDialog: Dispatch<SetStateAction<boolean>>
 };
 
 export const UserButton = ({
   handleCreateUser,
-  handleLogin
+  handleLogin,
+  setOpenUserLogoutDialog
 }: UserButtonType) => {
+  // ストアから取得
+  const loginData = useStore((state) => state.loginData);
 
   return (
     <Box component="div">
-      <Stack direction="row" spacing={1}>
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{
+          alignItems: "center"
+        }}>
         <Button
           variant="text"
           sx={{ color: "white" }}
           onClick={handleCreateUser}>
           新規登録
         </Button>
+        {loginData 
+          ? (
+          <Typography
+            variant="body2"
+            sx={{
+              fontWeight: "bold"
+            }}>{loginData.employeeName} さん</Typography>
+          )
+          : (
+            <Button
+              variant="text"
+              sx={{ color: "white" }}
+              onClick={handleLogin}>
+              ログイン
+            </Button>
+          )
+        }
         <Button
           variant="text"
+          disabled={!loginData}
           sx={{ color: "white" }}
-          onClick={handleLogin}>
-          ログイン
-        </Button>
-        <Button variant="text" sx={{ color: "white" }}>ログアウト</Button>
+          onClick={() => setOpenUserLogoutDialog(true)}>ログアウト</Button>
       </Stack>
     </Box>
   )

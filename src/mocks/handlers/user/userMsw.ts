@@ -32,7 +32,7 @@ export const userHandlers = [
     if(!matchData) {
       return HttpResponse.json(
         { message : "Unauthorized" },
-        {status: 401 }
+        { status: 401 }
       )
     }
 

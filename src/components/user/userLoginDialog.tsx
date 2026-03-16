@@ -15,21 +15,26 @@ import { SubmitButton } from "../buttons";
 import { UserCreateOrLogin } from "../topPage";
 import { LoginType } from "./userRegisterDialog";
 import Button from "@mui/material/Button";
+import { useStore } from "@/store/useStore";
 
 // ログインボタン押下後に表示するダイアログ
 type UserLoginDialogType = {
   userStatus: UserCreateOrLogin | "",
+  setOpenUserDialog: Dispatch<SetStateAction<boolean>>,
   openUserLoginDialog: boolean,
-  setOpenUserLoginDialog: Dispatch<SetStateAction<boolean>>
+  setOpenUserLoginDialog: Dispatch<SetStateAction<boolean>>,
+  toggleDialog: () => void
 };
 
 // スキーマとの連携
-type LoginDialogType = z.infer<typeof userLoginSchema>;
+export type LoginDialogType = z.infer<typeof userLoginSchema>;
 
 export const UserLoginDialog = ({
   userStatus,
+  setOpenUserDialog,
   openUserLoginDialog,
-  setOpenUserLoginDialog
+  setOpenUserLoginDialog,
+  toggleDialog
 }: UserLoginDialogType) => {
   // RHFとの連携
   const loginMethods = useForm<LoginDialogType>({
@@ -103,7 +108,7 @@ export const UserLoginDialog = ({
           {userStatus === "userLogin" && (
             <Button
               variant="text"
-              onClick={}>
+              onClick={toggleDialog}>
               新規登録が完了していない方はこちら
             </Button>
           )}
