@@ -1,6 +1,6 @@
 "use client"
 
-import { DepartmentName, DepartmentNameType } from "@/constants/tableConstants";
+import { DepartmentName } from "@/constants/tableConstants";
 import { userRegisterSchema } from "@/schemas/user/userValidations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Dialog from "@mui/material/Dialog";
@@ -16,12 +16,9 @@ import TextField from "@mui/material/TextField";
 import { Dispatch, SetStateAction } from "react";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
-import { SubmitButton } from "../buttons";
 import { postUserHooks } from "@/hooks/user/postUserHooks";
 import { UserCreateOrLogin } from "../topPage";
-import Button from "@mui/material/Button";
-import { postUserLoginHooks } from "@/hooks/user/postUserLoginHooks";
-import { postHooks } from "@/hooks/postHooks";
+import { UserRegisterOrLoginButton } from "./userButton";
 
 /**
  * ユーザー新規登録のダイアログ
@@ -164,16 +161,9 @@ export const UserRegisterDialog = ({
                 error={fieldState.invalid}
                 helperText={fieldState.error?.message} />
             )} />
-          <SubmitButton
+          <UserRegisterOrLoginButton
             userStatus={userStatus} />
         </Stack>
-        {/* {userStatus === "userLogin" && (
-          <Button
-            variant="text"
-            onClick={() => setUserStatus("userCreate")}>
-            新規登録していない方はこちらから
-          </Button>
-        )} */}
       </DialogContent>
     </Dialog>
   )

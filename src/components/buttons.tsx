@@ -9,19 +9,13 @@ import { InputTaskType } from "./createTask"
 import { UserCreateOrLogin } from "./topPage"
 
 // フォーム入力後の送信ボタン
-type SubmitButtonType = {
-  userStatus: UserCreateOrLogin | ""
-};
-
-export const SubmitButton = ({
-  userStatus
-}: SubmitButtonType) => {
+export const SubmitButton = () => {
 
   return (
     <Button
       variant="contained"
       type="submit">
-      {userStatus === "userCreate" ? "登録" : "ログイン"}
+      登録
     </Button>
   )
 }
@@ -50,17 +44,19 @@ export const EditButton = (
 
 // 削除ボタン
 type DeleteButtonType = {
-  onClick: () => void
+  id: string,
+  deleteStart: (id: string) => void
 };
 
 export const DeleteButton = ({
-  onClick
+  id,
+  deleteStart
 }: DeleteButtonType) => {
 
   return (
     <Button
       variant="contained"
-      onClick={onClick}>
+      onClick={() => deleteStart(id)}>
       削除
     </Button>
   )

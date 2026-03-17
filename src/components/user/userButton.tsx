@@ -37,6 +37,7 @@ export const UserButton = ({
         }}>
         <Button
           variant="text"
+          disabled={!!loginData}
           sx={{ color: "white" }}
           onClick={handleCreateUser}>
           新規登録
@@ -65,5 +66,23 @@ export const UserButton = ({
           onClick={() => setOpenUserLogoutDialog(true)}>ログアウト</Button>
       </Stack>
     </Box>
+  )
+};
+
+// ユーザーの新規登録ダイアログ内で配置するボタン
+type UserRegisterOrLoginButtonType = {
+  userStatus: UserCreateOrLogin | ""
+};
+
+export const UserRegisterOrLoginButton = ({
+  userStatus
+}: UserRegisterOrLoginButtonType) => {
+
+  return (
+    <Button
+      type="submit"
+      variant="contained">
+      {userStatus === "userCreate" ? "登録" : "ログイン"}
+    </Button>
   )
 };

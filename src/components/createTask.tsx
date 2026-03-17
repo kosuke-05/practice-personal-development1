@@ -25,6 +25,8 @@ export type InputTask = z.infer<typeof schemas>;
 export type InputTaskType = InputTask & {
   id: string
 };
+
+// タスクの新規登録・編集
 export const CreateTasks = () => {
   // RHFと連携
   const methods = useForm<InputTask>({
