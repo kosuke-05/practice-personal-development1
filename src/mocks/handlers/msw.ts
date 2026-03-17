@@ -47,6 +47,19 @@ export const handlers = [
     return HttpResponse.json(result, { status: 200 });
   }),
 
+  http.get("/api/detail", async ({ request }) => {
+    const url = new URL(request.url);
+
+    // 社員名・部署名と合致したデータを取得
+    const matchData = tasks.filter(
+      t =>
+        t.employeeName === url.searchParams.get("employeeName") &&
+        t.departmentName === url.searchParams.get("departmentName")
+    );
+
+    return HttpResponse.json(matchData, { status: 200 });
+  }),
+
   http.put("/api/task/:id", async ({ params, request }) => {
     const body = (await request.json()) as InputTaskType;
 

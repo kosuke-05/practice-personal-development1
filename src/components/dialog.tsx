@@ -8,24 +8,24 @@ import { Dispatch, SetStateAction } from "react";
 import { DeleteNoButton, DeleteYesButton } from "./buttons";
 
 type DialogType = {
-  openDialog: boolean,
-  handleDeleteYes: () => void,
-  handleDeleteNo: () => void
+  openDeleteConfirmation: boolean,
+  handleDelete: () => void,
+  cancelDelete: () => void
 };
 
 // 削除確認ダイアログ
-export const DialogComponent = (
+export const DeleteConfirmationDialog = (
   {
-    openDialog,
-    handleDeleteYes,
-    handleDeleteNo
+    openDeleteConfirmation,
+    handleDelete,
+    cancelDelete
   }: DialogType
 ) => {
 
 
   return (
     <Dialog
-      open={openDialog}
+      open={openDeleteConfirmation}
       PaperProps={{
         sx: {
           p: 2
@@ -34,8 +34,8 @@ export const DialogComponent = (
       <DialogTitle>データを削除して宜しいですか？</DialogTitle>
       <DialogActions>
         <Stack direction="row" spacing={2}>
-          <DeleteYesButton onClick={handleDeleteYes} />
-          <DeleteNoButton onClick={handleDeleteNo} />
+          <DeleteYesButton onClick={handleDelete} />
+          <DeleteNoButton onClick={cancelDelete} />
         </Stack>
       </DialogActions>
     </Dialog>

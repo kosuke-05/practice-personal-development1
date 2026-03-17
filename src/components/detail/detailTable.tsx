@@ -5,9 +5,24 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { InputTaskType } from "../createTask";
+import Stack from "@mui/material/Stack";
+import { DeleteButton, EditButton } from "../buttons";
+import { DepartmentName, DepartmentNameType, TaskPriority, TaskPriorityType, TaskStatus, TaskStatusType } from "@/constants/tableConstants";
+import dayjs from "dayjs";
 
 // タスク詳細を表示するテーブル
-export const DetailTable = () => {
+type DetailTableType = {
+  data: InputTaskType[],
+  handleEdit: (item: InputTaskType) => void,
+  deleteStart: (id: string) => void
+};
+
+export const DetailTable = ({
+  data,
+  handleEdit,
+  deleteStart
+}: DetailTableType) => {
 
   return (
     <Table>
@@ -23,7 +38,36 @@ export const DetailTable = () => {
         </TableRow>
       </TableHead>
       <TableBody>
-        
+        {data.map((item) => (
+          <TableRow key={item.id}>
+            <TableCell>{item.employeeName}</TableCell>
+            <TableCell>{DepartmentName[item.departmentName as DepartmentNameType]}</TableCell>
+            <TableCell>{item.taskDescription}</TableCell>
+            <TableCell>{TaskStatus[item.taskStatus as TaskStatusType]}</TableCell>
+            <TableCell>{TaskPriority[item.taskPriority as TaskPriorityType]}</TableCell>
+            <TableCell
+              sx={{
+                color: dayjs(item.dueDate).isSame(dayjs(), "day")
+                ? "red"
+                : "black"
+              }}>{item.dueDate}</TableCell>
+            <TableCell>
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{
+                  alignItems: "center"
+                }}>
+                <EditButton
+                  item={item}
+                  handleEdit={handleEdit} />
+                <DeleteButton
+                  id={item.id}
+                  deleteStart={deleteStart} />
+              </Stack>
+            </TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   )
