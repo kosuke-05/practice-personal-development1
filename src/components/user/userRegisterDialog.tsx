@@ -1,6 +1,6 @@
 "use client"
 
-import { DepartmentName } from "@/constants/tableConstants";
+import { DepartmentName } from "@/types/table";
 import { userRegisterSchema } from "@/schemas/user/userValidations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Dialog from "@mui/material/Dialog";

@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import { InputTaskType } from "../createTask";
 import Stack from "@mui/material/Stack";
 import { DeleteButton, EditButton } from "../buttons";
-import { DepartmentName, DepartmentNameType, TaskPriority, TaskPriorityType, TaskStatus, TaskStatusType } from "@/constants/tableConstants";
+import { DepartmentName, DepartmentNameType, TaskPriority, TaskPriorityType, TaskStatus, TaskStatusType } from "@/types/table";
 import dayjs from "dayjs";
 
 // タスク詳細を表示するテーブル

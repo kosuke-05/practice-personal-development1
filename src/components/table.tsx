@@ -1,6 +1,6 @@
 "use client"
 
-import { DepartmentName, DepartmentNameType, TaskPriority, TaskPriorityType, TaskStatus, TaskStatusType } from "@/constants/tableConstants";
+import { DepartmentName, DepartmentNameType, TaskPriority, TaskPriorityType, TaskStatus, TaskStatusType } from "@/types/table";
 import { getHooks } from "@/hooks/getHooks";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
