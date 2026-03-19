@@ -3,7 +3,7 @@
 import { Dispatch, SetStateAction } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { DepartmentName, DepartmentNameType } from "@/constants/tableConstants";
+import { DepartmentName, DepartmentNameType } from "@/types/table";
 import { SearchType } from "../appBar";
 
 

@@ -2,7 +2,7 @@
 
 import { searchGetApi } from "@/api/search/searchApi"
 import { InputTaskType } from "@/components/createTask";
-import { DepartmentNameType } from "@/constants/tableConstants";
+import { DepartmentNameType } from "@/types/table";
 import { useQuery } from "@tanstack/react-query"
 
 // 検索用GETHooks

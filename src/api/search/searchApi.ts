@@ -1,6 +1,6 @@
 "use client"
 
-import { DepartmentNameType } from "@/constants/tableConstants"
+import { DepartmentNameType } from "@/types/table"
 
 // 検索用GETApi
 export const searchGetApi = async (

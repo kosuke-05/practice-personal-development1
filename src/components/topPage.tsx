@@ -3,11 +3,12 @@
 import { TableComponent } from "./table";
 import { useState } from "react";
 import { searchGetHooks } from "@/hooks/search/searchHooks";
-import { AppBarComponent, SearchType } from "./appbar";
+import { AppBarComponent } from "./appbar";
 import { UserRegisterDialog } from "./user/userRegisterDialog";
 import { UserLoginDialog } from "./user/userLoginDialog";
 import { UserLogoutDialog } from "./user/userLogoutDialog";
 import { useStore } from "@/store/useStore";
+import { SearchType } from "@/types/appBar/appBar";
 
 /**
  * 一覧画面

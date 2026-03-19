@@ -1,6 +1,6 @@
 "use client"
 
-import { DetailType } from "@/constants/detail/detailConstants";
+import { DetailType } from "@/types/detail/detailConstants";
 
 export const getDetailApi = async (
   {
