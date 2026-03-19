@@ -37,7 +37,7 @@ export const DetailTopComponent = () => {
   // hooksの呼び出し
   const deleteHook = deleteHooks();
 
-   if(!data) return null;
+  if(!data) return null;
 
   /**
    * ①ストアから取得したデータをhooksに渡す（社員名・部署名のみ）

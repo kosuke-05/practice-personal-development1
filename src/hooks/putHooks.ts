@@ -12,6 +12,7 @@ export const putHooks = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ["detail"] });
     }
   })
 };

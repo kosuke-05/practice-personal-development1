@@ -13,6 +13,7 @@ export const deleteHooks = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ["detail"] });
     }
   });
 };
