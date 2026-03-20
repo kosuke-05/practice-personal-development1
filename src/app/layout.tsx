@@ -6,6 +6,8 @@ import { QueryClientComponent } from "@/providers/queryClientProvider";
 import { DrawerComponent } from "@/components/drawer";
 import Box from "@mui/material/Box";
 import { TaskContextProvider } from "@/providers/contextProvider";
+import { ErrorBoundaryComponent } from "@/components/error/errorBoundaryComponent";
+import { ErrorBoundary } from "react-error-boundary";
 
 
 const geistSans = Geist({
@@ -34,30 +36,37 @@ export default function RootLayout({
         <MswProvider>
           <QueryClientComponent>
             <TaskContextProvider>
-              <Box
-                sx={{
-                  display: "flex",
-                  width: "100%"
-                  }}>
+              <ErrorBoundary
+                fallbackRender={({ error, resetErrorBoundary }) => (
+                  <ErrorBoundaryComponent
+                    error={error}
+                    resetErrorBoundary={resetErrorBoundary} />
+                )}>
                 <Box
-                  component="div"
                   sx={{
-                    width: 250
-                  }}>
-                  {/** ドロワー */}
-                  <DrawerComponent />
-                </Box>
-
-                <Box
-                  component="main"
-                  sx={{
-                    flexGrow: 1,
-                    p: 3,
-                    boxSizing: "border-box"
+                    display: "flex",
+                    width: "100%"
                     }}>
-                  {children}
+                  <Box
+                    component="div"
+                    sx={{
+                      width: 250
+                    }}>
+                    {/** ドロワー */}
+                    <DrawerComponent />
+                  </Box>
+
+                  <Box
+                    component="main"
+                    sx={{
+                      flexGrow: 1,
+                      p: 3,
+                      boxSizing: "border-box"
+                      }}>
+                    {children}
+                  </Box>
                 </Box>
-              </Box>
+              </ErrorBoundary>
             </TaskContextProvider>
           </QueryClientComponent>
         </MswProvider>

@@ -1,6 +1,7 @@
 "use client"
 
 import { DepartmentNameType } from "@/types/table"
+import ErrorHandling from "../errorHandling";
 
 // 検索用GETApi
 export const searchGetApi = async (
@@ -20,7 +21,9 @@ export const searchGetApi = async (
 
   const res = await fetch(`/api/task?${params}`);
 
-  if(!res.ok) throw new Error("GET処理に失敗しました。");
+  if(!res.ok) {
+    throw new Error(ErrorHandling(res.status));
+  }
 
   return res.json();
 };
