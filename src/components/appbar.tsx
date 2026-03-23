@@ -15,6 +15,9 @@ import Button from "@mui/material/Button";
 import { UserButton } from "./user/userButton";
 import { UserCreateOrLogin } from "./topPage";
 import { PropsType } from "@/types/appBar/appBar";
+import TaskIcon from '@mui/icons-material/Task';
+import IconButton from "@mui/material/IconButton";
+import { useRouter } from "next/navigation";
 
 // AppBar
 export const AppBarComponent = ({
@@ -26,6 +29,9 @@ export const AppBarComponent = ({
   setOpenUserLoginDialog,
   setOpenUserLogoutDialog
 }: PropsType) => {
+  // ルーターを取得
+  const router = useRouter();
+
   /**
    * 新規登録ボタン押下後の処理
    * ①ステータスをuserCreateに更新
@@ -50,8 +56,16 @@ export const AppBarComponent = ({
     <AppBar
       position="fixed">
       <Toolbar
-        sx={{justifyContent: "space-between" }}>
+        sx={{
+          justifyContent: "space-between",
+          alignItems: "center"
+        }}>
         <Stack direction="row" spacing={1}>
+          <IconButton
+            onClick={() => router.push("/")}>
+            <TaskIcon
+              sx={{ color: "white" }} />
+          </IconButton>
           <SearchTextField
             matchData={matchData}
             setMatchData={setMatchData} />
