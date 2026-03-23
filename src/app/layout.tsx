@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import { TaskContextProvider } from "@/providers/contextProvider";
 import { ErrorBoundaryComponent } from "@/components/error/errorBoundaryComponent";
 import { ErrorBoundary } from "react-error-boundary";
+import { AppErrorBoundary } from "@/components/error/appErrorBoundary";
 
 
 const geistSans = Geist({
@@ -36,12 +37,7 @@ export default function RootLayout({
         <MswProvider>
           <QueryClientComponent>
             <TaskContextProvider>
-              <ErrorBoundary
-                fallbackRender={({ error, resetErrorBoundary }) => (
-                  <ErrorBoundaryComponent
-                    error={error}
-                    resetErrorBoundary={resetErrorBoundary} />
-                )}>
+              <AppErrorBoundary>
                 <Box
                   sx={{
                     display: "flex",
@@ -66,7 +62,7 @@ export default function RootLayout({
                     {children}
                   </Box>
                 </Box>
-              </ErrorBoundary>
+              </AppErrorBoundary>
             </TaskContextProvider>
           </QueryClientComponent>
         </MswProvider>
