@@ -60,6 +60,31 @@ export const handlers = [
     return HttpResponse.json(matchData, { status: 200 });
   }),
 
+  http.get("/api/pagination", ({ request }) => {
+    // クエリパラメータを取得
+    const url = new URL(request.url);
+
+    // mapから取得
+    const pageNumber = url.searchParams.get("pageNumber") ?? "";
+    const taskPerPage = url.searchParams.get("taskPerPage") ?? "";
+
+    // 数値に変換
+    const page = Number(pageNumber);
+    const limit = Number(taskPerPage);
+
+    // 開始・終了位置を計算
+    const start = (page - 1) * limit;
+    const end = start + limit;
+
+    // 開始・終了までを抜粋
+    const paginatedTask = tasks.slice(start, end);
+
+    return HttpResponse.json({
+      data: paginatedTask,
+      total: tasks.length
+    })
+  }),
+
   http.put("/api/task/:id", async ({ params, request }) => {
     const body = (await request.json()) as InputTaskType;
 

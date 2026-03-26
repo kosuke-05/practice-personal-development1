@@ -9,6 +9,7 @@ import { UserLoginDialog } from "./user/userLoginDialog";
 import { UserLogoutDialog } from "./user/userLogoutDialog";
 import { useStore } from "@/store/useStore";
 import { SearchType } from "@/types/appBar/appBar";
+import { paginationHooks } from "@/hooks/paginationHooks";
 
 /**
  * 一覧画面
@@ -44,8 +45,23 @@ export const TopPage = () => {
   // ログアウトダイアログの開閉状態
   const [openUserLogoutDialog, setOpenUserLogoutDialog] = useState<boolean>(false);
 
+  // トップ画面内のページネーション
+  const [pageNumber, setPageNumber] = useState<number>(1);
+
+  // 全部で何ページまで表示するかを指定
+  const totalPage = 5;
+
+  // 1ページにつき何件表示するか
+  const taskPerPage = 5;
+
   // ストアから取得
   const deleteLoginData = useStore((state) => state.deleteLoginData);
+
+  // ページネーションhooksを取得
+  const { data: paginationHook } = paginationHooks({
+    pageNumber: pageNumber,
+    taskPerPage: taskPerPage
+  });
 
   /**
    * 検索ボタン押下後の処理
@@ -80,7 +96,11 @@ export const TopPage = () => {
     <>
       {/** テーブル */}
       <TableComponent
-        tasks={tasks} />
+        tasks={tasks}
+        pageNumber={pageNumber}
+        setPageNumber={setPageNumber}
+        totalPage={totalPage}
+        taskPerPage={taskPerPage} />
 
       {/** AppBar */}
       <AppBarComponent
