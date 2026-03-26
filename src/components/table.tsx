@@ -7,12 +7,17 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { TaskContext } from "@/contexts/context";
 import { InputTaskType } from "./createTask";
 import { useRouter } from "next/navigation";
 import { deleteHooks } from "@/hooks/deleteHooks";
 import dayjs from "dayjs";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import { paginationHooks } from "@/hooks/paginationHooks";
+import { number } from "zod";
+import { PaginationComponent } from "./pagination";
 
 /**
  * データ一覧をテーブルで描画
@@ -20,22 +25,26 @@ import dayjs from "dayjs";
  * ②テーブル上で取得データを展開
  */
 type TableType = {
-  tasks: InputTaskType[] | undefined
+  tasks: InputTaskType[] | undefined,
+  pageNumber: number,
+  setPageNumber: Dispatch<SetStateAction<number>>,
+  totalPage: number,
+  taskPerPage: number
 };
 
 export const TableComponent = ({
-  tasks
+  tasks,
+  pageNumber,
+  setPageNumber,
+  totalPage,
+  taskPerPage
 }: TableType) => {
   // hooksから取得
   const { data } = getHooks();
-  const delHook = deleteHooks();
 
   // コンテキストから取得
   const context = useContext(TaskContext);
   if(!context) return;
-
-  // ルーターを取得
-  const router = useRouter();
 
   /**
    * 検索結果が存在するかの判定
@@ -79,6 +88,13 @@ export const TableComponent = ({
           ))}
         </TableBody>
       </Table>
+
+      {/** ページネーション */}
+      <PaginationComponent
+        pageNumber={pageNumber}
+        setPageNumber={setPageNumber}
+        totalPage={totalPage}
+        taskPerPage={taskPerPage} />
     </>
   )
 };
