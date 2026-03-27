@@ -1,6 +1,8 @@
 "use client"
 
 import { paginationApi } from "@/api/paginationApi"
+import { InputTaskType } from "@/components/createTask";
+import { PaginationType } from "@/types/pagination/paginationType";
 import { useQuery } from "@tanstack/react-query"
 
 export const paginationHooks = (
@@ -13,7 +15,7 @@ export const paginationHooks = (
   }
 ) => {
 
-  return useQuery({
+  return useQuery<PaginationType>({
     queryKey: ["tasks", { pageNumber, taskPerPage }],
     queryFn: () => paginationApi({
       pageNumber,

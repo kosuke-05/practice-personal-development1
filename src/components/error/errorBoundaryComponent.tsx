@@ -20,7 +20,7 @@ export const ErrorBoundaryComponent = ({
         variant="contained"
         onClick={() => {
           resetErrorBoundary();
-          router.push("/");
+          window.location.reload();
         }}>
         ホーム画面に戻る
       </Button>

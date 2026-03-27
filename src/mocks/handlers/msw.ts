@@ -1,4 +1,5 @@
 import { InputTask, InputTaskType } from "@/components/createTask";
+import { PaginationType } from "@/types/pagination/paginationType";
 import { HttpResponse, http } from "msw"
 
 // データ配列
@@ -79,7 +80,7 @@ export const handlers = [
     // 開始・終了までを抜粋
     const paginatedTask = tasks.slice(start, end);
 
-    return HttpResponse.json({
+    return HttpResponse.json<PaginationType>({
       data: paginatedTask,
       total: tasks.length
     })

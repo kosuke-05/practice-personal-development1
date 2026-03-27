@@ -58,7 +58,7 @@ export const TopPage = () => {
   const deleteLoginData = useStore((state) => state.deleteLoginData);
 
   // ページネーションhooksを取得
-  const { data: paginationHook } = paginationHooks({
+  const { data: paginatedData } = paginationHooks({
     pageNumber: pageNumber,
     taskPerPage: taskPerPage
   });
@@ -100,7 +100,8 @@ export const TopPage = () => {
         pageNumber={pageNumber}
         setPageNumber={setPageNumber}
         totalPage={totalPage}
-        taskPerPage={taskPerPage} />
+        taskPerPage={taskPerPage}
+        paginatedData={paginatedData} />
 
       {/** AppBar */}
       <AppBarComponent
