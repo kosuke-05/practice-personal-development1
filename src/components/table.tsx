@@ -1,7 +1,6 @@
 "use client"
 
 import { DepartmentName, DepartmentNameType, TaskPriority, TaskPriorityType, TaskStatus, TaskStatusType } from "@/types/table";
-import { getHooks } from "@/hooks/getHooks";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,14 +9,9 @@ import TableRow from "@mui/material/TableRow";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { TaskContext } from "@/contexts/context";
 import { InputTaskType } from "./createTask";
-import { useRouter } from "next/navigation";
-import { deleteHooks } from "@/hooks/deleteHooks";
 import dayjs from "dayjs";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import { paginationHooks } from "@/hooks/paginationHooks";
-import { number } from "zod";
 import { PaginationComponent } from "./pagination";
+import { PaginationType } from "@/types/pagination/paginationType";
 
 /**
  * データ一覧をテーブルで描画
@@ -29,7 +23,8 @@ type TableType = {
   pageNumber: number,
   setPageNumber: Dispatch<SetStateAction<number>>,
   totalPage: number,
-  taskPerPage: number
+  taskPerPage: number,
+  paginatedData: PaginationType | undefined
 };
 
 export const TableComponent = ({
@@ -37,10 +32,11 @@ export const TableComponent = ({
   pageNumber,
   setPageNumber,
   totalPage,
-  taskPerPage
+  taskPerPage,
+  paginatedData
 }: TableType) => {
   // hooksから取得
-  const { data } = getHooks();
+  // const { data } = getHooks();
 
   // コンテキストから取得
   const context = useContext(TaskContext);
@@ -51,7 +47,10 @@ export const TableComponent = ({
    * ①検索結果が存在　→　検索結果を優先
    * ②存在しない　→　全件取得
    */
-  const getData = tasks ?? data;
+  const getData =
+    tasks !== undefined
+    ? tasks ?? []
+    : paginatedData?.data ?? [];
 
   return (
     <>
