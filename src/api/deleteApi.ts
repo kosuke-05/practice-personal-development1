@@ -1,5 +1,8 @@
 "use client"
 
+import { ApiError } from "./apiError";
+import ErrorHandling from "./errorHandling";
+
 // 削除API
 export const deleteApi = async (id: string) => {
   const res = await fetch(`/api/task/${id}`, {
@@ -7,7 +10,7 @@ export const deleteApi = async (id: string) => {
   });
 
   if(!res.ok) {
-    throw new Error("API通信に失敗しました");
+    throw new ApiError(res.status, ErrorHandling(res.status));
   }
 
   return null;

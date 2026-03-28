@@ -10,6 +10,7 @@ import { UserLogoutDialog } from "./user/userLogoutDialog";
 import { useStore } from "@/store/useStore";
 import { SearchType } from "@/types/appBar/appBar";
 import { paginationHooks } from "@/hooks/paginationHooks";
+import { ErrorDialog } from "./error/errorDialog";
 
 /**
  * 一覧画面
@@ -133,6 +134,9 @@ export const TopPage = () => {
         openUserLogoutDialog={openUserLogoutDialog}
         setOpenUserLogoutDialog={setOpenUserLogoutDialog}
         handleLogoutYes={handleLogoutYes} />
+
+      {/** エラーダイアログ */}
+      <ErrorDialog />
     </>
   )
 };

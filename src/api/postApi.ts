@@ -1,6 +1,8 @@
 "use client"
 
 import { InputTask } from "@/components/createTask"
+import { ApiError } from "./apiError";
+import ErrorHandling from "./errorHandling";
 
 export const postApi = async (input: InputTask) => {
   // API通信
@@ -12,7 +14,7 @@ export const postApi = async (input: InputTask) => {
 
   // API通信が失敗
   if(!res.ok) {
-    throw new Error("登録処理に失敗しました。");
+    throw new ApiError(res.status, ErrorHandling(res.status));
   }
 
   return res.json();

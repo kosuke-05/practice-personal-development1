@@ -2,7 +2,7 @@
 
 import { getApi } from "@/api/getApi";
 import { InputTaskType } from "@/components/createTask";
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 
 export const getHooks = () => {
 

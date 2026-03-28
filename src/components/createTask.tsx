@@ -17,6 +17,8 @@ import { useContext, useEffect } from "react";
 import { TaskContext } from "@/contexts/context";
 import { useRouter } from "next/navigation";
 import { putHooks } from "@/hooks/putHooks";
+import { ApiError } from "@/api/apiError";
+import { ErrorDialog } from "./error/errorDialog";
 
 // スキーマとの連携
 export type InputTask = z.infer<typeof schemas>;
@@ -65,6 +67,11 @@ export const CreateTasks = () => {
   // ルーターの取得
   const router = useRouter();
 
+  // ストアから取得
+  const setErrorMessage = useStore((state) => state.setErrorMessage);
+  const setOpenErrorDialog = useStore((state) => state.setOpenErrorDialog);
+  const setErrorStatus = useStore((state) => state.setErrorStatus);
+
   // create, editによって、呼び出す関数を分岐する
   const submit = (data: InputTask) => {
     if(context.pageStatus === "create") postSubmit(data);
@@ -78,11 +85,19 @@ export const CreateTasks = () => {
    * ③登録完了後、フォームを初期化する
    * ③トップ画面に遷移
    */
-  const postSubmit = (data: InputTask) => {
-    post.mutate(data);
-    methods.reset(initialForm);
-    router.push("/");
-    context.setPageStatus("normal");
+  const postSubmit = async (data: InputTask) => {
+    try {
+      await post.mutateAsync(data);
+      methods.reset(initialForm);
+      router.push("/");
+      context.setPageStatus("normal");
+    } catch(e) {
+      if(e instanceof ApiError) {
+        setErrorMessage(e.message);
+        setOpenErrorDialog(true);
+        setErrorStatus(e.status);
+      }
+    }
   };
 
   /**
@@ -93,15 +108,23 @@ export const CreateTasks = () => {
    * ④ページステータスをnormalに更新
    * ⑤フォーム内容もリセット
    */
-  const putSubmit = (data: InputTask) => {
-    put.mutate(
+  const putSubmit = async (data: InputTask) => {
+    try {
+      await put.mutateAsync(
       {
         id: context.editData.id,
         input: data
       });
-    router.push("/");
-    methods.reset(initialForm);
-    context.setPageStatus("normal");
+      router.push("/");
+      methods.reset(initialForm);
+      context.setPageStatus("normal");
+    } catch(e) {
+      if(e instanceof ApiError) {
+        setErrorMessage(e.message);
+        setErrorStatus(e.status);
+        setOpenErrorDialog(true);
+      }
+    }
   };
 
   // ラベル
@@ -127,61 +150,66 @@ export const CreateTasks = () => {
   }, [context.pageStatus]);
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(submit)}>
-        <Box
-          sx={{
-            width: 500,
-            p: 2
-          }}>
-          <Stack direction="column" spacing={1}>
-            <Typography variant="h5">{PageStatusLabel[context.pageStatus]}画面</Typography>
-            <InputForm<InputTask>
-              name="taskName"
-              label="タスク名"
-              placeholder="タスク名を入力して下さい" />
-            <InputForm<InputTask>
-              name="taskDescription"
-              label="タスク説明欄"
-              placeholder="任意" />
-            <SelectBox<InputTask>
-              name="taskStatus"
-              label="進捗度"
-              array={[
-                {value: "notStarted", name: "未着手"},
-                {value: "inProgress", name: "進行中"},
-                {value: "done", name: "完了"}
-              ]} />
-            <SelectBox<InputTask>
-              name="taskPriority"
-              label="優先度"
-              array={[
-                {value: "low", name: "低"},
-                {value: "middle", name: "中"},
-                {value: "high", name: "高"}
-              ]} />
-            <InputDate<InputTask>
-              name="dueDate"
-              label="提出期限" />
-            <Stack direction="row" spacing={2}>
+    <>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(submit)}>
+          <Box
+            sx={{
+              width: 500,
+              p: 2
+            }}>
+            <Stack direction="column" spacing={1}>
+              <Typography variant="h5">{PageStatusLabel[context.pageStatus]}画面</Typography>
               <InputForm<InputTask>
-                name="employeeName"
-                label="社員名"
-                placeholder="営業太郎" />
+                name="taskName"
+                label="タスク名"
+                placeholder="タスク名を入力して下さい" />
+              <InputForm<InputTask>
+                name="taskDescription"
+                label="タスク説明欄"
+                placeholder="任意" />
               <SelectBox<InputTask>
-                name="departmentName"
-                label="部署名"
+                name="taskStatus"
+                label="進捗度"
                 array={[
-                  {value: "sales", name: "営業部"},
-                  {value: "development", name: "開発部"},
-                  {value: "accounting", name: "経理部"},
-                  {value: "generalAffairs", name: "総務部"}
+                  {value: "notStarted", name: "未着手"},
+                  {value: "inProgress", name: "進行中"},
+                  {value: "done", name: "完了"}
                 ]} />
+              <SelectBox<InputTask>
+                name="taskPriority"
+                label="優先度"
+                array={[
+                  {value: "low", name: "低"},
+                  {value: "middle", name: "中"},
+                  {value: "high", name: "高"}
+                ]} />
+              <InputDate<InputTask>
+                name="dueDate"
+                label="提出期限" />
+              <Stack direction="row" spacing={2}>
+                <InputForm<InputTask>
+                  name="employeeName"
+                  label="社員名"
+                  placeholder="営業太郎" />
+                <SelectBox<InputTask>
+                  name="departmentName"
+                  label="部署名"
+                  array={[
+                    {value: "sales", name: "営業部"},
+                    {value: "development", name: "開発部"},
+                    {value: "accounting", name: "経理部"},
+                    {value: "generalAffairs", name: "総務部"}
+                  ]} />
+              </Stack>
+              <SubmitButton />
             </Stack>
-            <SubmitButton />
-          </Stack>
-        </Box>
-      </form>
-    </FormProvider>
+          </Box>
+        </form>
+      </FormProvider>
+
+      {/** エラーメッセージのダイアログ */}
+      <ErrorDialog />
+    </>
   )
 }
