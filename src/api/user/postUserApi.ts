@@ -1,6 +1,8 @@
 "use client"
 
 import { UserValidationType } from "@/components/user/userRegisterDialog"
+import ErrorHandling from "../errorHandling";
+import { ApiError } from "../apiError";
 
 export const postUserApi = async (data: UserValidationType) => {
   const res = await fetch("/api/user", {
@@ -10,7 +12,7 @@ export const postUserApi = async (data: UserValidationType) => {
   });
 
   if(!res.ok) {
-    throw new Error("登録処理に失敗しました。")
+    throw new ApiError(res.status, ErrorHandling(res.status));
   };
 
   return res.json();

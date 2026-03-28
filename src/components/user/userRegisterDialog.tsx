@@ -19,6 +19,8 @@ import z from "zod";
 import { postUserHooks } from "@/hooks/user/postUserHooks";
 import { UserCreateOrLogin } from "../topPage";
 import { UserRegisterOrLoginButton } from "./userButton";
+import { ApiError } from "@/api/apiError";
+import { useStore } from "@/store/useStore";
 
 /**
  * ユーザー新規登録のダイアログ
@@ -66,6 +68,11 @@ export const UserRegisterDialog = ({
     password: ""
   };
 
+  // ストアから取得
+  const setOpenErrorDialog = useStore((state) => state.setOpenErrorDialog);
+  const setErrorMessage = useStore((state) => state.setErrorMessage);
+  const setErrorStatus = useStore((state) => state.setErrorStatus);
+
   /**
    * 新規登録を入力し、登録ボタン押下後の処理
    * ①hooks層を呼び出す（API通信が開始）
@@ -79,9 +86,17 @@ export const UserRegisterDialog = ({
    * ②仮サーバーが管理しているデータと照合とる
    * ③合致したらログイン成功
    */
-  const registerStart = (data: UserValidationType) => {
-    userHook.mutate(data);
-    completeRegister();
+  const registerStart = async (data: UserValidationType) => {
+    try {
+      await userHook.mutateAsync(data);
+      completeRegister();
+    } catch(e) {
+      if(e instanceof ApiError) {
+        setErrorMessage(e.message);
+        setErrorStatus(e.status);
+        setOpenErrorDialog(true)
+      }
+    }
   };
 
   const completeRegister = () => {

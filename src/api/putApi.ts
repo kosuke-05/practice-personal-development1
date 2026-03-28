@@ -1,6 +1,8 @@
 "use client"
 
-import { InputTask, InputTaskType } from "@/components/createTask"
+import { InputTask } from "@/components/createTask"
+import { ApiError } from "./apiError";
+import ErrorHandling from "./errorHandling";
 
 export const putApi = async (
   {
@@ -14,6 +16,10 @@ export const putApi = async (
     headers: { "Content-Type" : "application/json" },
     body: JSON.stringify(input)
   });
+
+  if(!res.ok) {
+    throw new ApiError(res.status, ErrorHandling(res.status));
+  }
 
   return res.json();
 };

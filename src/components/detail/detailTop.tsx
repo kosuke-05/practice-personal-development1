@@ -9,6 +9,7 @@ import { InputTaskType } from "../createTask";
 import { useRouter } from "next/navigation";
 import { DeleteConfirmationDialog } from "../dialog";
 import { deleteHooks } from "@/hooks/deleteHooks";
+import { ApiError } from "@/api/apiError";
 
 // タスク詳細画面のトップ
 export const DetailTopComponent = () => {
@@ -33,6 +34,11 @@ export const DetailTopComponent = () => {
 
   // 削除対象データのidを管理
   const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  // ストアから取得
+  const setOpenErrorDialog = useStore((state) => state.setOpenErrorDialog);
+  const setErrorMessage = useStore((state) => state.setErrorMessage);
+  const setErrorStatus = useStore((state) => state.setErrorStatus);
 
   // hooksの呼び出し
   const deleteHook = deleteHooks();
@@ -75,11 +81,19 @@ export const DetailTopComponent = () => {
    * ②ダイアログを閉じる
    * ③削除対象のidをnullに初期化する
    */
-  const handleDelete = () => {
-    deleteHook.mutate(deleteId!);
-    setOpenDeleteConfirmation(false);
-    setDeleteId(null);
-    router.push("/");
+  const handleDelete = async () => {
+    try {
+      await deleteHook.mutateAsync(deleteId!);
+      setOpenDeleteConfirmation(false);
+      setDeleteId(null);
+      router.push("/");
+    } catch(e) {
+      if(e instanceof ApiError) {
+        setErrorMessage(e.message);
+        setErrorStatus(e.status);
+        setOpenErrorDialog(true);
+      }
+    }
   };
 
   /**
