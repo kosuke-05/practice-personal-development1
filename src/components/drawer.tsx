@@ -97,7 +97,10 @@ export const DrawerComponent = () => {
             width: 250,
             p: 1,
             flexShrink: 0,
-            mt: "64px"
+            mt:
+              context.pageStatus === "normal"
+              ? "64px"
+              : "0px"
           }
         }}>
         <List>
