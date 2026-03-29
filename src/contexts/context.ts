@@ -4,7 +4,7 @@ import { InputTaskType } from "@/components/createTask";
 import { createContext } from "react"
 
 // 登録・編集のステータス切り替え
-export type PageStatus = "create" | "edit" | "normal";
+export type PageStatus = "create" | "edit" | "detail" | "normal";
 
 // コンテキストの作成
 type ContextType = {
