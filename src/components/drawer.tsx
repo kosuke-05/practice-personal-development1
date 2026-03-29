@@ -33,7 +33,7 @@ export const DrawerComponent = () => {
 
   // コンテキストの取得
   const context = useContext(TaskContext);
-  if(!context) return;
+  if(!context) return null;
 
   // ルーターの取得
   const router = useRouter();
@@ -81,7 +81,8 @@ export const DrawerComponent = () => {
       }},
     { name: "詳細", icon: <AccountCircleIcon />,
       action: () => {
-        handleDetail()
+        context.setPageStatus("detail");
+        handleDetail();
       }
     },
     { name: "設定", path: "/", icon: <SettingsIcon /> }

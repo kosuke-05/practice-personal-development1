@@ -40,8 +40,8 @@ export const DetailTable = ({
       <TableBody>
         {data.map((item) => (
           <TableRow key={item.id}>
-            <TableCell>{item.employeeName}</TableCell>
-            <TableCell>{DepartmentName[item.departmentName as DepartmentNameType]}</TableCell>
+            <TableCell>{item.employeeName} / {DepartmentName[item.departmentName as DepartmentNameType]}</TableCell>
+            <TableCell>{item.taskName}</TableCell>
             <TableCell>{item.taskDescription}</TableCell>
             <TableCell>{TaskStatus[item.taskStatus as TaskStatusType]}</TableCell>
             <TableCell>{TaskPriority[item.taskPriority as TaskPriorityType]}</TableCell>

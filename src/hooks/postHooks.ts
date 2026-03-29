@@ -13,6 +13,7 @@ export const postHooks = () => {
     // キャッシュから再フェチ
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ["detail"] });
     }
   });
 }
