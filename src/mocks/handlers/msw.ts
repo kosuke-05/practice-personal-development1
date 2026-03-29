@@ -24,6 +24,7 @@ export const handlers = [
     return HttpResponse.json(tasks, { status: 200 });
   }),
 
+  // 検索機能
   http.get("/api/task", ({ request }) => {
     // api層のURLを取得
     const url = new URL(request.url);
@@ -48,6 +49,7 @@ export const handlers = [
     return HttpResponse.json(result, { status: 200 });
   }),
 
+  // 詳細画面
   http.get("/api/detail", async ({ request }) => {
     const url = new URL(request.url);
 

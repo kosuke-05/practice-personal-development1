@@ -2,6 +2,7 @@
 
 import { getDetailApi } from "@/api/detail/getDetailApi"
 import { InputTaskType } from "@/components/createTask";
+import { DepartmentNameType } from "@/types/table";
 import { useQuery } from "@tanstack/react-query"
 
 export const getDetailHooks = (
@@ -10,7 +11,7 @@ export const getDetailHooks = (
     departmentName
   } : {
     employeeName?: string,
-    departmentName?: string
+    departmentName?: DepartmentNameType
 }) => {
 
   return useQuery<InputTaskType[]>({

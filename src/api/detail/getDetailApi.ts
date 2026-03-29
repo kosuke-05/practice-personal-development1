@@ -1,6 +1,8 @@
 "use client"
 
 import { DetailType } from "@/types/detail/detailConstants";
+import { ApiError } from "../apiError";
+import ErrorHandling from "../errorHandling";
 
 export const getDetailApi = async (
   {
@@ -17,7 +19,7 @@ export const getDetailApi = async (
   const res = await fetch(`/api/detail/?${params}`);
 
   if(!res.ok) {
-    throw new Error("詳細情報の取得に失敗しました。")
+    throw new ApiError(res.status, ErrorHandling(res.status));
   }
 
   return res.json();

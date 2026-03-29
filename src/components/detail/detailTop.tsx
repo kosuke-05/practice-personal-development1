@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { DeleteConfirmationDialog } from "../dialog";
 import { deleteHooks } from "@/hooks/deleteHooks";
 import { ApiError } from "@/api/apiError";
+import { DepartmentNameType } from "@/types/table";
 
 // タスク詳細画面のトップ
 export const DetailTopComponent = () => {
@@ -24,9 +25,9 @@ export const DetailTopComponent = () => {
   const router = useRouter();
 
   // hooksを呼び出す
-  const { data } = getDetailHooks({
+  const { data, error, isError } = getDetailHooks({
     employeeName: loginData?.employeeName,
-    departmentName: loginData?.departmentName
+    departmentName: loginData?.departmentName as DepartmentNameType
   });
 
   // 削除確認ダイアログの開閉状態
@@ -39,6 +40,13 @@ export const DetailTopComponent = () => {
   const setOpenErrorDialog = useStore((state) => state.setOpenErrorDialog);
   const setErrorMessage = useStore((state) => state.setErrorMessage);
   const setErrorStatus = useStore((state) => state.setErrorStatus);
+
+  // 詳細のAPI通信で例外が発生した場合の処理
+  if(isError && error instanceof ApiError) {
+    setErrorStatus(error.status);
+    setErrorMessage(error.message);
+    setOpenErrorDialog(true);
+  };
 
   // hooksの呼び出し
   const deleteHook = deleteHooks();
@@ -87,6 +95,7 @@ export const DetailTopComponent = () => {
       setOpenDeleteConfirmation(false);
       setDeleteId(null);
       router.push("/");
+      context.setPageStatus("normal");
     } catch(e) {
       if(e instanceof ApiError) {
         setErrorMessage(e.message);
