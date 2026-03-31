@@ -1,8 +1,8 @@
 "use client"
 
-import { InputTask } from "@/components/createTask"
 import { ApiError } from "./apiError";
 import ErrorHandling from "./errorHandling";
+import { InputTask } from "@/types/create/createType";
 
 export const putApi = async (
   {

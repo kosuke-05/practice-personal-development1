@@ -1,15 +1,13 @@
 "use client"
 
-import { TaskContext } from "@/contexts/context"
+import { DeleteButtonType, DeleteNoButtonType, DeleteYesButtonType, EditButtonType, SearchButtonType } from "@/types/buttons/buttonsType";
+import { SubmitButtonType } from "@/types/buttons/user/userButtonType";
 import Button from "@mui/material/Button"
-import { useRouter } from "next/navigation"
-import { Dispatch, SetStateAction, useContext } from "react"
-import { useFormContext } from "react-hook-form"
-import { InputTaskType } from "./createTask"
-import { UserCreateOrLogin } from "./topPage"
 
 // フォーム入力後の送信ボタン
-export const SubmitButton = () => {
+export const SubmitButton = ({
+  userStatus
+}: SubmitButtonType) => {
 
   return (
     <Button
@@ -21,11 +19,6 @@ export const SubmitButton = () => {
 }
 
 // 編集ボタン
-type EditButtonType = {
-  item: InputTaskType,
-  handleEdit: (item: InputTaskType) => void
-};
-
 export const EditButton = (
   {
     item,
@@ -43,11 +36,6 @@ export const EditButton = (
 }
 
 // 削除ボタン
-type DeleteButtonType = {
-  id: string,
-  deleteStart: (id: string) => void
-};
-
 export const DeleteButton = ({
   id,
   deleteStart
@@ -63,10 +51,6 @@ export const DeleteButton = ({
 };
 
 // 削除【はい】ボタン
-type DeleteYesButtonType = {
-  onClick: () => void
-};
-
 export const DeleteYesButton = ({
   onClick
 }: DeleteYesButtonType) => {
@@ -81,10 +65,6 @@ export const DeleteYesButton = ({
 };
 
 // 削除【いいえ】ボタン
-type DeleteNoButtonType = {
-  onClick: () => void
-};
-
 export const DeleteNoButton = ({
   onClick
 }: DeleteNoButtonType) => {
@@ -99,10 +79,6 @@ export const DeleteNoButton = ({
 };
 
 // 検索ボタン
-type SearchButtonType = {
-  onClick: () => void
-};
-
 export const SearchButton = ({
   onClick
 }: SearchButtonType) => {
@@ -118,4 +94,4 @@ export const SearchButton = ({
       検索
     </Button>
   )
-}
+};

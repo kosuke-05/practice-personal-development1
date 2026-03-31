@@ -1,7 +1,7 @@
 "use client"
 
 import { getDetailApi } from "@/api/detail/getDetailApi"
-import { InputTaskType } from "@/components/createTask";
+import { InputTaskType } from "@/types/create/createType";
 import { DepartmentNameType } from "@/types/table";
 import { useQuery } from "@tanstack/react-query"
 

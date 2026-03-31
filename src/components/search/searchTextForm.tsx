@@ -1,20 +1,14 @@
 "use client"
 
+import { SearchPropsType } from "@/types/search/searchPropsType";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { Dispatch, SetStateAction } from "react";
-import { SearchType } from "../appBar";
 
 // 検索用のテキストフォーム
-type PropsType = {
-  matchData: SearchType,
-  setMatchData: Dispatch<SetStateAction<SearchType>>
-};
-
 export const SearchTextField = ({
   matchData,
   setMatchData
-}: PropsType) => {
+}: SearchPropsType) => {
 
   return (
     <Stack direction="row" spacing={1}>

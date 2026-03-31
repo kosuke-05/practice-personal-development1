@@ -5,12 +5,12 @@ import { DetailTable } from "./detailTable";
 import { getDetailHooks } from "@/hooks/detail/getDetailHooks";
 import { useContext, useState } from "react";
 import { TaskContext } from "@/contexts/context";
-import { InputTaskType } from "../createTask";
 import { useRouter } from "next/navigation";
 import { DeleteConfirmationDialog } from "../dialog";
 import { deleteHooks } from "@/hooks/deleteHooks";
 import { ApiError } from "@/api/apiError";
 import { DepartmentNameType } from "@/types/table";
+import { InputTaskType } from "@/types/create/createType";
 
 // タスク詳細画面のトップ
 export const DetailTopComponent = () => {

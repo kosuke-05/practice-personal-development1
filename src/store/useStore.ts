@@ -1,6 +1,6 @@
 "use client"
 
-import { UserValidationType } from "@/components/user/userRegisterDialog";
+import { UserValidationType } from "@/types/user/userRegisterDialogType";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

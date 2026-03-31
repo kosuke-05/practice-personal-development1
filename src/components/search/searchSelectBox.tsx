@@ -1,22 +1,15 @@
 "use client"
 
-import { Dispatch, SetStateAction } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { DepartmentName, DepartmentNameType } from "@/types/table";
-import { SearchType } from "../appBar";
-
+import { DepartmentName } from "@/types/table";
+import { SearchPropsType } from "@/types/search/searchPropsType";
 
 // 検索用のセレクトボックス
-type PropsType = {
-  matchData: SearchType,
-  setMatchData: Dispatch<SetStateAction<SearchType>>
-};
-
 export const SearchSelectBox = ({
   matchData,
   setMatchData
-}: PropsType) => {
+}: SearchPropsType) => {
 
   return (
     <Select

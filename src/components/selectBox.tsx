@@ -1,36 +1,12 @@
 "use client"
 
+import { SelectBoxType } from "@/types/create/selectBoxType";
 import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { Controller, Path, useFormContext } from "react-hook-form"
-
-// セレクトボックス（共通化）
-type SelectBoxType<T> = {
-  name: Path<T>,
-  label: string,
-  array: SelectType
-};
-
-type SelectType =
-  | [
-    { value: "notStarted", name: "未着手" },
-    { value: "inProgress", name: "進行中" },
-    { value: "done", name: "完了" }
-  ]
-  | [
-    { value: "low", name: "低" },
-    { value: "middle", name: "中" },
-    { value: "high", name: "高" }
-  ]
-  | [
-    { value: "sales", name: "営業部" },
-    { value: "development", name: "開発部" },
-    { value: "accounting", name: "経理部" },
-    { value: "generalAffairs", name: "総務部" }
-  ];
 
 export const SelectBox = <T extends Record<string, any>>({
   name,

@@ -13,37 +13,21 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { Dispatch, SetStateAction } from "react";
 import { Controller, useForm } from "react-hook-form";
-import z from "zod";
 import { postUserHooks } from "@/hooks/user/postUserHooks";
-import { UserCreateOrLogin } from "../topPage";
 import { UserRegisterOrLoginButton } from "./userButton";
 import { ApiError } from "@/api/apiError";
 import { useStore } from "@/store/useStore";
+import { UserRegisterDialogType, UserValidationType } from "@/types/user/userRegisterDialogType";
 
 /**
  * ユーザー新規登録のダイアログ
  * ①ログイン時も使いまわす
  */
-type UserRegisterDialogType = {
-  openUserDialog: boolean,
-  setOpenUserDialog: Dispatch<SetStateAction<boolean>>,
-  userStatus: UserCreateOrLogin | "",
-  setUserStatus: Dispatch<SetStateAction<UserCreateOrLogin | "">>
-};
-
-// スキーマとの同期
-export type UserValidationType = z.infer<typeof userRegisterSchema>;
-
-// ログイン情報
-export type LoginType = Omit<UserValidationType, "employeeName" | "departmentName">;
-
 export const UserRegisterDialog = ({
   openUserDialog,
   setOpenUserDialog,
-  userStatus,
-  setUserStatus
+  userStatus
 }: UserRegisterDialogType) => {
   // RHF
   const userMethods = useForm<UserValidationType>({

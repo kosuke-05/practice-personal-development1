@@ -2,13 +2,7 @@
 
 import { Controller, Path, useFormContext } from "react-hook-form"
 import TextField from "@mui/material/TextField";
-
-// テキストフォーム（共通化）
-type InputType<T> = {
-  name: Path<T>,
-  label: string,
-  placeholder: string
-};
+import { InputType } from "@/types/create/inputType";
 
 export const InputForm = <T extends Record<string, any>>({
   name,

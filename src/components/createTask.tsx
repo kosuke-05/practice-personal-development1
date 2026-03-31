@@ -1,7 +1,6 @@
 "use client"
 
 import { FormProvider, useForm } from "react-hook-form";
-import * as z from "zod"
 import { schemas } from "@/schemas/inputValidations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputForm } from "./textForm";
@@ -19,14 +18,7 @@ import { useRouter } from "next/navigation";
 import { putHooks } from "@/hooks/putHooks";
 import { ApiError } from "@/api/apiError";
 import { ErrorDialog } from "./error/errorDialog";
-
-// スキーマとの連携
-export type InputTask = z.infer<typeof schemas>;
-
-// 上記の型にidを追加
-export type InputTaskType = InputTask & {
-  id: string
-};
+import { InputTask } from "@/types/create/createType";
 
 // タスクの新規登録・編集
 export const CreateTasks = () => {
@@ -188,8 +180,7 @@ export const CreateTasks = () => {
                   {value: "high", name: "高"}
                 ]} />
               <InputDate<InputTask>
-                name="dueDate"
-                label="提出期限" />
+                name="dueDate" />
               <Stack direction="row" spacing={2}>
                 <InputForm<InputTask>
                   name="employeeName"
@@ -205,7 +196,8 @@ export const CreateTasks = () => {
                     {value: "generalAffairs", name: "総務部"}
                   ]} />
               </Stack>
-              <SubmitButton />
+              <SubmitButton
+                userStatus={userStatus} />
             </Stack>
           </Box>
         </form>

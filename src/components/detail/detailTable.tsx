@@ -5,19 +5,13 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { InputTaskType } from "../createTask";
 import Stack from "@mui/material/Stack";
 import { DeleteButton, EditButton } from "../buttons";
 import { DepartmentName, DepartmentNameType, TaskPriority, TaskPriorityType, TaskStatus, TaskStatusType } from "@/types/table";
 import dayjs from "dayjs";
+import { DetailTableType } from "@/types/detail/detailTableType";
 
 // タスク詳細を表示するテーブル
-type DetailTableType = {
-  data: InputTaskType[],
-  handleEdit: (item: InputTaskType) => void,
-  deleteStart: (id: string) => void
-};
-
 export const DetailTable = ({
   data,
   handleEdit,

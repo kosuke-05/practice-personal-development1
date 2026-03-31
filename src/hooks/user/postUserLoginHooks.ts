@@ -1,9 +1,9 @@
 "use client"
 
 import { postUserLoginApi } from "@/api/user/postUserLoginApi";
-import { LoginDialogType } from "@/components/user/userLoginDialog";
-import { UserValidationType } from "@/components/user/userRegisterDialog";
 import { useStore } from "@/store/useStore";
+import { LoginDialogType } from "@/types/user/loginDialogType";
+import { UserValidationType } from "@/types/user/userRegisterDialogType";
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 export const postUserLoginHooks = () => {

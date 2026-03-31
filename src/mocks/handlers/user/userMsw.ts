@@ -1,5 +1,5 @@
-import { UserValidationType } from "@/components/user/userRegisterDialog";
-import {http, HttpResponse} from "msw";
+import { UserValidationType } from "@/types/user/userRegisterDialogType";
+import { http, HttpResponse } from "msw";
 
 const users: UserValidationType[] = [];
 
@@ -38,4 +38,4 @@ export const userHandlers = [
 
     return HttpResponse.json(matchData);
   })
-]
+];

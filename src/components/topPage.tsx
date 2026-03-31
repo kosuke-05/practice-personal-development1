@@ -11,13 +11,12 @@ import { useStore } from "@/store/useStore";
 import { SearchType } from "@/types/appBar/appBar";
 import { paginationHooks } from "@/hooks/paginationHooks";
 import { ErrorDialog } from "./error/errorDialog";
+import { UserCreateOrLogin } from "@/types/home/homeType";
 
 /**
  * 一覧画面
  * ①AppBarとテーブルを描画するコンポーネントを読み込む
  */
-export type UserCreateOrLogin = "userCreate" | "userLogin";
-
 export const TopPage = () => {
   /**
    * 検索フォームへの入力情報を管理
@@ -118,13 +117,11 @@ export const TopPage = () => {
       <UserRegisterDialog
         openUserDialog={openUserDialog}
         setOpenUserDialog={setOpenUserDialog}
-        userStatus={userStatus}
-        setUserStatus={setUserStatus} />
+        userStatus={userStatus} />
 
       {/** ログインダイアログ */}
       <UserLoginDialog
         userStatus={userStatus}
-        setOpenUserDialog={setOpenUserDialog}
         openUserLoginDialog={openUserLoginDialog}
         setOpenUserLoginDialog={setOpenUserLoginDialog}
         toggleDialog={toggleDialog} />

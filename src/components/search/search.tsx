@@ -1,8 +1,6 @@
 "use client"
 
-import InputLabel from "@mui/material/InputLabel";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
+import { SearchDataType } from "@/types/search/searchDataType";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Stack from "@mui/material/Stack";
@@ -18,13 +16,6 @@ import { useState } from "react"
  * ・期限
  * ②入力・選択情報はstateで管理
  */
-type SearchDataType = {
-  taskName: string,
-  taskStatus: string,
-  taskPriority: string,
-  dueDate: string
-};
-
 export const SearchComponent = () => {
   const [searchData, setSearchData] = useState<SearchDataType>({
     taskName: "",

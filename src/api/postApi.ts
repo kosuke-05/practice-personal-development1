@@ -1,6 +1,6 @@
 "use client"
 
-import { InputTask } from "@/components/createTask"
+import { InputTask } from "@/types/create/createType";
 import { ApiError } from "./apiError";
 import ErrorHandling from "./errorHandling";
 

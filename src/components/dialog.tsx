@@ -4,14 +4,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import Stack from "@mui/material/Stack";
-import { Dispatch, SetStateAction } from "react";
 import { DeleteNoButton, DeleteYesButton } from "./buttons";
-
-type DialogType = {
-  openDeleteConfirmation: boolean,
-  handleDelete: () => void,
-  cancelDelete: () => void
-};
+import { DialogType } from "@/types/delete/deleteDialogType";
 
 // 削除確認ダイアログ
 export const DeleteConfirmationDialog = (
