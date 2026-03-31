@@ -1,6 +1,6 @@
 "use client"
 
-import { InputTaskType } from "@/components/createTask"
+import { InputTaskType } from "../create/createType";
 
 export type PaginationType = {
   data: InputTaskType[],

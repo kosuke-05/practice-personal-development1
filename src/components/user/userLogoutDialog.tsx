@@ -1,16 +1,10 @@
 "use client"
 
+import { LogoutDialogType } from "@/types/user/userLogoutDialogType";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Dispatch, SetStateAction } from "react";
-
-type LogoutDialogType = {
-  openUserLogoutDialog: boolean,
-  setOpenUserLogoutDialog: Dispatch<SetStateAction<boolean>>,
-  handleLogoutYes: () => void
-};
 
 export const UserLogoutDialog = ({
   openUserLogoutDialog,

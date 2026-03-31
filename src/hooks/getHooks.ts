@@ -1,7 +1,7 @@
 "use client"
 
 import { getApi } from "@/api/getApi";
-import { InputTaskType } from "@/components/createTask";
+import { InputTaskType } from "@/types/create/createType";
 import { useQuery } from "@tanstack/react-query"
 
 export const getHooks = () => {

@@ -1,23 +1,14 @@
 "use client"
 
-import { paginationHooks } from "@/hooks/paginationHooks";
+import { PaginationComponentType } from "@/types/pagination/PaginationComponentType";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { Dispatch, SetStateAction } from "react";
 
 // ページネーション
-type PaginationComponentType = {
-  pageNumber: number,
-  setPageNumber: Dispatch<SetStateAction<number>>,
-  totalPage: number,
-  taskPerPage: number
-};
-
 export const PaginationComponent = ({
   pageNumber,
   setPageNumber,
-  totalPage,
-  taskPerPage
+  totalPage
 }: PaginationComponentType) => {
 
   return (

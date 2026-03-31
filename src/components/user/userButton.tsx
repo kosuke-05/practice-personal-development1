@@ -3,22 +3,15 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import { Dispatch, SetStateAction } from "react";
-import { UserCreateOrLogin } from "../topPage";
 import { useStore } from "@/store/useStore";
 import Typography from "@mui/material/Typography";
+import { UserButtonType, UserRegisterOrLoginButtonType } from "@/types/buttons/user/userButtonType";
 
 /**
  * AppBar上に配置
  * ①当ファイルはあくまでボタンの実装ファイル
  * →　ボタン押下後の処理等は責務分離の関係でappBar内に定義する
  */
-type UserButtonType = {
-  handleCreateUser: () => void,
-  handleLogin: () => void,
-  setOpenUserLogoutDialog: Dispatch<SetStateAction<boolean>>
-};
-
 export const UserButton = ({
   handleCreateUser,
   handleLogin,
@@ -42,7 +35,7 @@ export const UserButton = ({
           onClick={handleCreateUser}>
           新規登録
         </Button>
-        {loginData 
+        {loginData
           ? (
           <Typography
             variant="body2"
@@ -70,10 +63,6 @@ export const UserButton = ({
 };
 
 // ユーザーの新規登録ダイアログ内で配置するボタン
-type UserRegisterOrLoginButtonType = {
-  userStatus: UserCreateOrLogin | ""
-};
-
 export const UserRegisterOrLoginButton = ({
   userStatus
 }: UserRegisterOrLoginButtonType) => {

@@ -6,12 +6,12 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import { TaskContext } from "@/contexts/context";
-import { InputTaskType } from "./createTask";
 import dayjs from "dayjs";
 import { PaginationComponent } from "./pagination";
 import { PaginationType } from "@/types/pagination/paginationType";
+import { InputTaskType } from "@/types/create/createType";
 
 /**
  * データ一覧をテーブルで描画
@@ -32,7 +32,6 @@ export const TableComponent = ({
   pageNumber,
   setPageNumber,
   totalPage,
-  taskPerPage,
   paginatedData
 }: TableType) => {
   // hooksから取得
@@ -92,8 +91,7 @@ export const TableComponent = ({
       <PaginationComponent
         pageNumber={pageNumber}
         setPageNumber={setPageNumber}
-        totalPage={totalPage}
-        taskPerPage={taskPerPage} />
+        totalPage={totalPage} />
     </>
   )
 };

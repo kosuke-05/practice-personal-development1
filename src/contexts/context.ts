@@ -1,6 +1,6 @@
 "use client"
 
-import { InputTaskType } from "@/components/createTask";
+import { InputTaskType } from "@/types/create/createType";
 import { createContext } from "react"
 
 // 登録・編集のステータス切り替え

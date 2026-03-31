@@ -1,4 +1,4 @@
-import { InputTask, InputTaskType } from "@/components/createTask";
+import { InputTask, InputTaskType } from "@/types/create/createType";
 import { PaginationType } from "@/types/pagination/paginationType";
 import { HttpResponse, http } from "msw"
 

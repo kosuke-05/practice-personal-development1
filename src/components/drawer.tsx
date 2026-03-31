@@ -2,7 +2,7 @@
 
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { ReactNode, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -16,14 +16,7 @@ import { useRouter } from "next/navigation";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useStore } from "@/store/useStore";
 import { PromptLoginDialog } from "./detail/promptLoginDialog";
-
-// メニュー型
-type drawerMenu = {
-      name: string,
-      path?: string,
-      icon: ReactNode,
-      action?: () => void
-};
+import { drawerMenu } from "@/types/drawer/drawerMenu";
 
 // ドロワー（全画面固定）
 export const DrawerComponent = () => {

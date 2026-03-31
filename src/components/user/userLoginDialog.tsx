@@ -8,30 +8,16 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { Dispatch, SetStateAction } from "react";
 import { Controller, useForm } from "react-hook-form";
-import z from "zod";
 import { SubmitButton } from "../buttons";
-import { UserCreateOrLogin } from "../topPage";
-import { LoginType } from "./userRegisterDialog";
 import Button from "@mui/material/Button";
-import { useStore } from "@/store/useStore";
+import { UserLoginDialogType } from "@/types/buttons/user/userLoginDialogType";
+import { LoginDialogType } from "@/types/user/loginDialogType";
+import { LoginType } from "@/types/user/userRegisterDialogType";
 
 // ログインボタン押下後に表示するダイアログ
-type UserLoginDialogType = {
-  userStatus: UserCreateOrLogin | "",
-  setOpenUserDialog: Dispatch<SetStateAction<boolean>>,
-  openUserLoginDialog: boolean,
-  setOpenUserLoginDialog: Dispatch<SetStateAction<boolean>>,
-  toggleDialog: () => void
-};
-
-// スキーマとの連携
-export type LoginDialogType = z.infer<typeof userLoginSchema>;
-
 export const UserLoginDialog = ({
   userStatus,
-  setOpenUserDialog,
   openUserLoginDialog,
   setOpenUserLoginDialog,
   toggleDialog
@@ -105,6 +91,7 @@ export const UserLoginDialog = ({
             )} />
           <SubmitButton
             userStatus={userStatus} />
+
           {userStatus === "userLogin" && (
             <Button
               variant="text"

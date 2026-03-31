@@ -1,7 +1,6 @@
 "use client"
 
 import { paginationApi } from "@/api/paginationApi"
-import { InputTaskType } from "@/components/createTask";
 import { PaginationType } from "@/types/pagination/paginationType";
 import { useQuery } from "@tanstack/react-query"
 

@@ -1,18 +1,13 @@
 "use client"
 
 import { TaskContext } from "@/contexts/context";
+import { PromptLoginDialogType } from "@/types/detail/promptLoginDialog";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
 import Typography from "@mui/material/Typography";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { useContext } from "react";
 
 // 詳細画面押下時にログインを促すダイアログ
-type PromptLoginDialogType = {
-  openPromptLoginDialog: boolean,
-  setOpenPromptLoginDialog: Dispatch<SetStateAction<boolean>>
-};
-
 export const PromptLoginDialog = ({
   openPromptLoginDialog,
   setOpenPromptLoginDialog
