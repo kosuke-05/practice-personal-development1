@@ -1,6 +1,6 @@
 "use client"
 
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import * as z from "zod"
 import { schemas } from "@/schemas/inputValidations";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,7 +39,9 @@ export const CreateTasks = () => {
       taskDescription: "",
       taskStatus: "",
       taskPriority: "",
-      dueDate: ""
+      dueDate: "",
+      employeeName: "",
+      departmentName: ""
     }
   });
 
@@ -131,6 +133,7 @@ export const CreateTasks = () => {
   const PageStatusLabel = {
     create: "登録",
     edit: "編集",
+    detail: "詳細",
     normal: "通常"
   };
 
