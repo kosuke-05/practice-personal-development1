@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { useStore } from "@/store/useStore";
 import Typography from "@mui/material/Typography";
-import { UserButtonType, UserRegisterOrLoginButtonType } from "@/types/buttons/user/userButtonType";
+import { UserButtonType, UserLoginButtonType, UserRegisterButtonType } from "@/types/buttons/user/userButtonType";
 
 /**
  * AppBar上に配置
@@ -62,16 +62,32 @@ export const UserButton = ({
   )
 };
 
-// ユーザーの新規登録ダイアログ内で配置するボタン
-export const UserRegisterOrLoginButton = ({
-  userStatus
-}: UserRegisterOrLoginButtonType) => {
+// ユーザーの新規登録ボタン
+export const UserRegisterButton = ({
+  isRegister
+}: UserRegisterButtonType) => {
 
   return (
     <Button
       type="submit"
-      variant="contained">
-      {userStatus === "userCreate" ? "登録" : "ログイン"}
+      variant="contained"
+      disabled={isRegister}>
+      新規登録
+    </Button>
+  )
+};
+
+// ユーザーログインボタン
+export const UserLoginButton = ({
+  isRegister
+}: UserLoginButtonType) => {
+
+  return (
+    <Button
+      type="submit"
+      variant="contained"
+      disabled={!isRegister}>
+      ログイン
     </Button>
   )
 };

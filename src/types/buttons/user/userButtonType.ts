@@ -1,6 +1,7 @@
 "use client"
 
 import { UserCreateOrLogin } from "@/types/home/homeType";
+import { UserValidationType } from "@/types/user/userRegisterDialogType";
 import { Dispatch, SetStateAction } from "react";
 
 export type UserButtonType = {
@@ -9,10 +10,15 @@ export type UserButtonType = {
   setOpenUserLogoutDialog: Dispatch<SetStateAction<boolean>>
 };
 
-export type UserRegisterOrLoginButtonType = {
-  userStatus: UserCreateOrLogin | ""
+export type UserRegisterButtonType = {
+  isRegister: boolean
+};
+
+export type UserLoginButtonType = {
+  isRegister: boolean
 };
 
 export type SubmitButtonType = {
-  userStatus: UserCreateOrLogin | ""
+  userStatus: UserCreateOrLogin | "",
+  loginData: UserValidationType | null
 };

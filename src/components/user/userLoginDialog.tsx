@@ -9,18 +9,23 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { Controller, useForm } from "react-hook-form";
-import { SubmitButton } from "../buttons";
 import Button from "@mui/material/Button";
 import { UserLoginDialogType } from "@/types/buttons/user/userLoginDialogType";
 import { LoginDialogType } from "@/types/user/loginDialogType";
 import { LoginType } from "@/types/user/userRegisterDialogType";
+import { UserLoginButton } from "./userButton";
+import { ApiError } from "@/api/apiError";
+import { useStore } from "@/store/useStore";
 
 // ログインボタン押下後に表示するダイアログ
 export const UserLoginDialog = ({
   userStatus,
+  setUserStatus,
   openUserLoginDialog,
   setOpenUserLoginDialog,
-  toggleDialog
+  toggleDialog,
+  loginData,
+  isRegister
 }: UserLoginDialogType) => {
   // RHFとの連携
   const loginMethods = useForm<LoginDialogType>({
@@ -41,16 +46,29 @@ export const UserLoginDialog = ({
     password: ""
   };
 
+  // ストアから取得
+  const setOpenErrorDialog = useStore((state) => state.setOpenErrorDialog);
+  const setErrorMessage = useStore((state) => state.setErrorMessage);
+  const setErrorStatus = useStore((state) => state.setErrorStatus);
+
   /**
    * ログインボタン押下後の処理
    * ①loginHookに入力データを渡す
    * ②処理完了後、フォームを閉じる
    * ③処理完了後、フォームを初期化
    */
-  const handleLogin = (data: LoginDialogType) => {
-    loginHook.mutate(data);
-    setOpenUserLoginDialog(false);
-    loginMethods.reset(LoginInitial);
+  const handleLogin = async (data: LoginDialogType) => {
+    try {
+      await loginHook.mutateAsync(data);
+      setOpenUserLoginDialog(false);
+      loginMethods.reset(LoginInitial);
+    } catch(e) {
+      if(e instanceof ApiError) {
+        setErrorMessage(e.message);
+        setErrorStatus(e.status);
+        setOpenErrorDialog(true);
+      }
+    }
   };
 
   return (
@@ -89,13 +107,17 @@ export const UserLoginDialog = ({
                 error={fieldState.invalid}
                 helperText={fieldState.error?.message} />
             )} />
-          <SubmitButton
-            userStatus={userStatus} />
+          <UserLoginButton
+            isRegister={isRegister} />
 
           {userStatus === "userLogin" && (
             <Button
               variant="text"
-              onClick={toggleDialog}>
+              onClick={() => {
+                toggleDialog();
+                setUserStatus("userCreate");
+              }}
+              disabled={isRegister}>
               新規登録が完了していない方はこちら
             </Button>
           )}

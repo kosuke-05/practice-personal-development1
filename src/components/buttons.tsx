@@ -1,13 +1,10 @@
 "use client"
 
 import { DeleteButtonType, DeleteNoButtonType, DeleteYesButtonType, EditButtonType, SearchButtonType } from "@/types/buttons/buttonsType";
-import { SubmitButtonType } from "@/types/buttons/user/userButtonType";
 import Button from "@mui/material/Button"
 
-// フォーム入力後の送信ボタン
-export const SubmitButton = ({
-  userStatus
-}: SubmitButtonType) => {
+// タスク登録ボタン
+export const TaskRegisterButton = () => {
 
   return (
     <Button

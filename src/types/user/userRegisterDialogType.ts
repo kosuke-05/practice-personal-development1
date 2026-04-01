@@ -8,7 +8,8 @@ import z from "zod";
 export type UserRegisterDialogType = {
   openUserDialog: boolean,
   setOpenUserDialog: Dispatch<SetStateAction<boolean>>,
-  userStatus: UserCreateOrLogin | ""
+  userStatus: UserCreateOrLogin | "",
+  isRegister: boolean
 };
 
 // スキーマとの同期
