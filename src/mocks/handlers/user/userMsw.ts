@@ -13,8 +13,6 @@ export const userHandlers = [
     };
     users.push(newUser);
 
-    console.log("msw : 登録完了")
-
     return HttpResponse.json(newUser, { status: 201 });
   }),
 

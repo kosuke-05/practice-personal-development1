@@ -7,7 +7,7 @@ import { InputForm } from "./textForm";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import { SelectBox } from "./selectBox";
-import { SubmitButton } from "./buttons";
+import { TaskRegisterButton } from "./buttons";
 import { InputDate } from "./textDateForm";
 import Typography from "@mui/material/Typography";
 import { useStore } from "@/store/useStore";
@@ -196,8 +196,7 @@ export const CreateTasks = () => {
                     {value: "generalAffairs", name: "総務部"}
                   ]} />
               </Stack>
-              <SubmitButton
-                userStatus={userStatus} />
+              <TaskRegisterButton />
             </Stack>
           </Box>
         </form>

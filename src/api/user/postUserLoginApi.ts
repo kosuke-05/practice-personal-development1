@@ -1,6 +1,8 @@
 "use client"
 
-import { LoginType, UserValidationType } from "@/components/user/userRegisterDialog"
+import { LoginType } from "@/types/user/userRegisterDialogType";
+import { ApiError } from "../apiError";
+import ErrorHandling from "../errorHandling";
 
 export const postUserLoginApi = 
   async (data: LoginType) => {
@@ -12,7 +14,7 @@ export const postUserLoginApi =
   });
 
   if(!res.ok) {
-    throw new Error("ログイン処理に失敗しました。")
+    throw new ApiError(res.status, ErrorHandling(res.status))
   }
 
   return res.json();

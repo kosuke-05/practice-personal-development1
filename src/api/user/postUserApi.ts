@@ -1,8 +1,8 @@
 "use client"
 
-import { UserValidationType } from "@/components/user/userRegisterDialog"
 import ErrorHandling from "../errorHandling";
 import { ApiError } from "../apiError";
+import { UserValidationType } from "@/types/user/userRegisterDialogType";
 
 export const postUserApi = async (data: UserValidationType) => {
   const res = await fetch("/api/user", {

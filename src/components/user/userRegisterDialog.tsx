@@ -15,19 +15,19 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { Controller, useForm } from "react-hook-form";
 import { postUserHooks } from "@/hooks/user/postUserHooks";
-import { UserRegisterOrLoginButton } from "./userButton";
+import { UserRegisterButton } from "./userButton";
 import { ApiError } from "@/api/apiError";
 import { useStore } from "@/store/useStore";
 import { UserRegisterDialogType, UserValidationType } from "@/types/user/userRegisterDialogType";
 
 /**
  * ユーザー新規登録のダイアログ
- * ①ログイン時も使いまわす
  */
 export const UserRegisterDialog = ({
   openUserDialog,
   setOpenUserDialog,
-  userStatus
+  userStatus,
+  isRegister
 }: UserRegisterDialogType) => {
   // RHF
   const userMethods = useForm<UserValidationType>({
@@ -56,6 +56,7 @@ export const UserRegisterDialog = ({
   const setOpenErrorDialog = useStore((state) => state.setOpenErrorDialog);
   const setErrorMessage = useStore((state) => state.setErrorMessage);
   const setErrorStatus = useStore((state) => state.setErrorStatus);
+  const loginData = useStore((state) => state.loginData);
 
   /**
    * 新規登録を入力し、登録ボタン押下後の処理
@@ -160,8 +161,8 @@ export const UserRegisterDialog = ({
                 error={fieldState.invalid}
                 helperText={fieldState.error?.message} />
             )} />
-          <UserRegisterOrLoginButton
-            userStatus={userStatus} />
+          <UserRegisterButton
+            isRegister={isRegister} />
         </Stack>
       </DialogContent>
     </Dialog>

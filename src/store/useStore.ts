@@ -10,6 +10,9 @@ import { persist } from "zustand/middleware";
  * →社員名・部署名・メールアドレス・パスワード
  */
 type StoreType = {
+  isRegister: boolean,
+  setIsRegister: (bool: boolean) => void,
+
   loginData: UserValidationType | null,
   addLoginData: (data: UserValidationType) => void,
   deleteLoginData: () => void,
@@ -30,6 +33,9 @@ type StoreType = {
 export const useStore = create<StoreType>() (
   persist(
     (set) => ({
+      isRegister: false,
+      setIsRegister: (bool: boolean) => set({ isRegister: bool }),
+
       loginData: null,
       addLoginData: (data: UserValidationType) => set({ loginData: data }),
       deleteLoginData: () => set({ loginData: null }),

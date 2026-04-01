@@ -1,7 +1,7 @@
 "use client"
 
 import { TableComponent } from "./table";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { searchGetHooks } from "@/hooks/search/searchHooks";
 import { AppBarComponent } from "./appbar";
 import { UserRegisterDialog } from "./user/userRegisterDialog";
@@ -12,6 +12,7 @@ import { SearchType } from "@/types/appBar/appBar";
 import { paginationHooks } from "@/hooks/paginationHooks";
 import { ErrorDialog } from "./error/errorDialog";
 import { UserCreateOrLogin } from "@/types/home/homeType";
+import { TaskContext } from "@/contexts/context";
 
 /**
  * 一覧画面
@@ -56,6 +57,9 @@ export const TopPage = () => {
 
   // ストアから取得
   const deleteLoginData = useStore((state) => state.deleteLoginData);
+  const loginData = useStore((state) => state.loginData);
+  const isRegister = useStore((state) => state.isRegister);
+  const setIsRegister = useStore((state) => state.setIsRegister);
 
   // ページネーションhooksを取得
   const { data: paginatedData } = paginationHooks({
@@ -86,10 +90,14 @@ export const TopPage = () => {
    * ログアウト確認ダイアログで【はい】押下後の処理
    * ①ストアのdeleteLoginDataを呼び出す
    * ②ダイアログを閉じる
+   * ③ユーザーステータスをuserCreateに戻す
+   * ④ユーザー未登録状態にする
    */
   const handleLogoutYes = () => {
     deleteLoginData();
     setOpenUserLogoutDialog(false);
+    setUserStatus("userCreate");
+    setIsRegister(false);
   };
 
   return (
@@ -117,14 +125,18 @@ export const TopPage = () => {
       <UserRegisterDialog
         openUserDialog={openUserDialog}
         setOpenUserDialog={setOpenUserDialog}
-        userStatus={userStatus} />
+        userStatus={userStatus}
+        isRegister={isRegister} />
 
       {/** ログインダイアログ */}
       <UserLoginDialog
         userStatus={userStatus}
+        setUserStatus={setUserStatus}
         openUserLoginDialog={openUserLoginDialog}
         setOpenUserLoginDialog={setOpenUserLoginDialog}
-        toggleDialog={toggleDialog} />
+        toggleDialog={toggleDialog}
+        loginData={loginData}
+        isRegister={isRegister} />
 
       {/** ログアウトダイアログ */}
       <UserLogoutDialog
