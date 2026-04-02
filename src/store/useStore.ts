@@ -1,5 +1,6 @@
 "use client"
 
+import { AuthStatusType } from "@/types/buttons/user/userButtonType";
 import { UserValidationType } from "@/types/user/userRegisterDialogType";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -10,9 +11,11 @@ import { persist } from "zustand/middleware";
  * →社員名・部署名・メールアドレス・パスワード
  */
 type StoreType = {
-  isRegister: boolean,
-  setIsRegister: (bool: boolean) => void,
+  // 新規登録・ログイン・ゲスト状態の管理
+  authStatus: AuthStatusType,
+  setAuthStatus: (auth: AuthStatusType) => void,
 
+  // ログインした際のデータを管理
   loginData: UserValidationType | null,
   addLoginData: (data: UserValidationType) => void,
   deleteLoginData: () => void,
@@ -33,8 +36,8 @@ type StoreType = {
 export const useStore = create<StoreType>() (
   persist(
     (set) => ({
-      isRegister: false,
-      setIsRegister: (bool: boolean) => set({ isRegister: bool }),
+      authStatus: "guest",
+      setAuthStatus: (auth: AuthStatusType) => set({ authStatus: auth }),
 
       loginData: null,
       addLoginData: (data: UserValidationType) => set({ loginData: data }),

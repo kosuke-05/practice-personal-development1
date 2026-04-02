@@ -13,6 +13,7 @@ import { paginationHooks } from "@/hooks/paginationHooks";
 import { ErrorDialog } from "./error/errorDialog";
 import { UserCreateOrLogin } from "@/types/home/homeType";
 import { TaskContext } from "@/contexts/context";
+import { AuthStatusType } from "@/types/buttons/user/userButtonType";
 
 /**
  * 一覧画面
@@ -37,7 +38,7 @@ export const TopPage = () => {
   // ユーザー新規登録ダイアログの状態管理
   const [openUserDialog, setOpenUserDialog] = useState<boolean>(false);
 
-  // 新規登録・ログインの分岐
+  // 新規登録・ログインダイアログの分岐
   const [userStatus, setUserStatus] = useState<UserCreateOrLogin | "">("");
 
   // ログインダイアログの開閉状態
@@ -57,9 +58,7 @@ export const TopPage = () => {
 
   // ストアから取得
   const deleteLoginData = useStore((state) => state.deleteLoginData);
-  const loginData = useStore((state) => state.loginData);
-  const isRegister = useStore((state) => state.isRegister);
-  const setIsRegister = useStore((state) => state.setIsRegister);
+  const setAuthStatus = useStore((state) => state.setAuthStatus);
 
   // ページネーションhooksを取得
   const { data: paginatedData } = paginationHooks({
@@ -97,7 +96,7 @@ export const TopPage = () => {
     deleteLoginData();
     setOpenUserLogoutDialog(false);
     setUserStatus("userCreate");
-    setIsRegister(false);
+    setAuthStatus("guest");
   };
 
   return (
@@ -125,8 +124,7 @@ export const TopPage = () => {
       <UserRegisterDialog
         openUserDialog={openUserDialog}
         setOpenUserDialog={setOpenUserDialog}
-        userStatus={userStatus}
-        isRegister={isRegister} />
+        userStatus={userStatus} />
 
       {/** ログインダイアログ */}
       <UserLoginDialog
@@ -134,9 +132,7 @@ export const TopPage = () => {
         setUserStatus={setUserStatus}
         openUserLoginDialog={openUserLoginDialog}
         setOpenUserLoginDialog={setOpenUserLoginDialog}
-        toggleDialog={toggleDialog}
-        loginData={loginData}
-        isRegister={isRegister} />
+        toggleDialog={toggleDialog} />
 
       {/** ログアウトダイアログ */}
       <UserLogoutDialog
