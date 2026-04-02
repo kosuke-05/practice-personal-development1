@@ -1,8 +1,8 @@
 "use client"
 
-import { UserCreateOrLogin } from "@/components/topPage"
 import { Dispatch, SetStateAction } from "react"
 import { DepartmentNameType } from "../table";
+import { UserCreateOrLogin } from "../home/homeType";
 
 // AppBarに関する型宣言
 export type SearchType = {

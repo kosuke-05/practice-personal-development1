@@ -23,9 +23,7 @@ export const UserLoginDialog = ({
   setUserStatus,
   openUserLoginDialog,
   setOpenUserLoginDialog,
-  toggleDialog,
-  loginData,
-  isRegister
+  toggleDialog
 }: UserLoginDialogType) => {
   // RHFとの連携
   const loginMethods = useForm<LoginDialogType>({
@@ -50,6 +48,8 @@ export const UserLoginDialog = ({
   const setOpenErrorDialog = useStore((state) => state.setOpenErrorDialog);
   const setErrorMessage = useStore((state) => state.setErrorMessage);
   const setErrorStatus = useStore((state) => state.setErrorStatus);
+  const authStatus = useStore((state) => state.authStatus);
+  const setAuthStatus = useStore((state) => state.setAuthStatus);
 
   /**
    * ログインボタン押下後の処理
@@ -62,6 +62,7 @@ export const UserLoginDialog = ({
       await loginHook.mutateAsync(data);
       setOpenUserLoginDialog(false);
       loginMethods.reset(LoginInitial);
+      setAuthStatus("loggedIn");
     } catch(e) {
       if(e instanceof ApiError) {
         setErrorMessage(e.message);
@@ -107,8 +108,7 @@ export const UserLoginDialog = ({
                 error={fieldState.invalid}
                 helperText={fieldState.error?.message} />
             )} />
-          <UserLoginButton
-            isRegister={isRegister} />
+          <UserLoginButton />
 
           {userStatus === "userLogin" && (
             <Button
@@ -117,7 +117,7 @@ export const UserLoginDialog = ({
                 toggleDialog();
                 setUserStatus("userCreate");
               }}
-              disabled={isRegister}>
+              disabled={authStatus === "registered"}>
               新規登録が完了していない方はこちら
             </Button>
           )}

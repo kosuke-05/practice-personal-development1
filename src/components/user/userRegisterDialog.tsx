@@ -26,8 +26,7 @@ import { UserRegisterDialogType, UserValidationType } from "@/types/user/userReg
 export const UserRegisterDialog = ({
   openUserDialog,
   setOpenUserDialog,
-  userStatus,
-  isRegister
+  userStatus
 }: UserRegisterDialogType) => {
   // RHF
   const userMethods = useForm<UserValidationType>({
@@ -56,7 +55,7 @@ export const UserRegisterDialog = ({
   const setOpenErrorDialog = useStore((state) => state.setOpenErrorDialog);
   const setErrorMessage = useStore((state) => state.setErrorMessage);
   const setErrorStatus = useStore((state) => state.setErrorStatus);
-  const loginData = useStore((state) => state.loginData);
+  const setAuthStatus = useStore((state) => state.setAuthStatus);
 
   /**
    * 新規登録を入力し、登録ボタン押下後の処理
@@ -87,6 +86,7 @@ export const UserRegisterDialog = ({
   const completeRegister = () => {
     setOpenUserDialog(false);
     userMethods.reset(UserInitial);
+    setAuthStatus("registered");
   };
 
   return (
@@ -161,8 +161,7 @@ export const UserRegisterDialog = ({
                 error={fieldState.invalid}
                 helperText={fieldState.error?.message} />
             )} />
-          <UserRegisterButton
-            isRegister={isRegister} />
+          <UserRegisterButton />
         </Stack>
       </DialogContent>
     </Dialog>

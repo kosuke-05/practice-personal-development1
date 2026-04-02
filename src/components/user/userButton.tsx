@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { useStore } from "@/store/useStore";
 import Typography from "@mui/material/Typography";
-import { UserButtonType, UserLoginButtonType, UserRegisterButtonType } from "@/types/buttons/user/userButtonType";
+import { UserButtonType } from "@/types/buttons/user/userButtonType";
 
 /**
  * AppBar上に配置
@@ -19,6 +19,7 @@ export const UserButton = ({
 }: UserButtonType) => {
   // ストアから取得
   const loginData = useStore((state) => state.loginData);
+  const authStatus = useStore((state) => state.authStatus);
 
   return (
     <Box component="div">
@@ -30,31 +31,32 @@ export const UserButton = ({
         }}>
         <Button
           variant="text"
-          disabled={!!loginData}
+          disabled={authStatus === "registered" || authStatus === "loggedIn"}
           sx={{ color: "white" }}
           onClick={handleCreateUser}>
           新規登録
         </Button>
-        {loginData
+        {authStatus === "loggedIn"
           ? (
           <Typography
             variant="body2"
             sx={{
               fontWeight: "bold"
-            }}>{loginData.employeeName} さん</Typography>
+            }}>{loginData?.employeeName} さん</Typography>
           )
           : (
             <Button
               variant="text"
               sx={{ color: "white" }}
-              onClick={handleLogin}>
+              onClick={handleLogin}
+              disabled={authStatus === "guest"}>
               ログイン
             </Button>
           )
         }
         <Button
           variant="text"
-          disabled={!loginData}
+          disabled={authStatus === "guest" || authStatus === "registered"}
           sx={{ color: "white" }}
           onClick={() => setOpenUserLogoutDialog(true)}>ログアウト</Button>
       </Stack>
@@ -63,30 +65,24 @@ export const UserButton = ({
 };
 
 // ユーザーの新規登録ボタン
-export const UserRegisterButton = ({
-  isRegister
-}: UserRegisterButtonType) => {
+export const UserRegisterButton = () => {
 
   return (
     <Button
       type="submit"
-      variant="contained"
-      disabled={isRegister}>
+      variant="contained">
       新規登録
     </Button>
   )
 };
 
 // ユーザーログインボタン
-export const UserLoginButton = ({
-  isRegister
-}: UserLoginButtonType) => {
+export const UserLoginButton = () => {
 
   return (
     <Button
       type="submit"
-      variant="contained"
-      disabled={!isRegister}>
+      variant="contained">
       ログイン
     </Button>
   )
