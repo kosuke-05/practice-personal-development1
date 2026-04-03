@@ -33,23 +33,24 @@ export const DrawerComponent = () => {
 
   // ストアから取得
   const loginData = useStore((state) => state.loginData);
+  const authStatus = useStore((state) => state.authStatus);
 
   // ログインを促すダイアログの開閉状態
   const [openPromptLoginDialog, setOpenPromptLoginDialog] = useState<boolean>(false);
 
   /**
    * ドロワーメニュー一覧
-   * ・ホーム（一覧画面） 
+   * ・ホーム（一覧画面）
    * ・新規登録
    *
    * ・詳細
    * ①ログイン情報が存在するかの判定
    * --- 情報が存在する場合 ---
    * ・社員名・部署名で照合とる
-   * 
+   *
    * --- 情報が存在しない場合 ---
    * ・ログインするように促す（ダイアログの開閉状態をtrueにする）
-   * 
+   *
    * ・設定
    */
   const handleDetail = () => {
@@ -74,7 +75,9 @@ export const DrawerComponent = () => {
       }},
     { name: "詳細", icon: <AccountCircleIcon />,
       action: () => {
-        context.setPageStatus("detail");
+        if(authStatus === "loggedIn") {
+          context.setPageStatus("detail");
+        }
         handleDetail();
       }
     },
