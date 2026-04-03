@@ -3,7 +3,7 @@
 import { useStore } from "@/store/useStore";
 import { DetailTable } from "./detailTable";
 import { getDetailHooks } from "@/hooks/detail/getDetailHooks";
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { TaskContext } from "@/contexts/context";
 import { useRouter } from "next/navigation";
 import { DeleteConfirmationDialog } from "../dialog";
@@ -19,7 +19,7 @@ export const DetailTopComponent = () => {
 
   // コンテキストを取得
   const context = useContext(TaskContext);
-  if(!context) return null;
+  if(!context) return;
 
   // ルーターを取得
   const router = useRouter();
@@ -50,8 +50,22 @@ export const DetailTopComponent = () => {
 
   // hooksの呼び出し
   const deleteHook = deleteHooks();
+  if(!data) return;
 
-  if(!data) return null;
+  /**
+   * 詳細画面で表示するタスクのソート
+   * ①タスク進捗度が完了だと表示しない
+   * ②直近の日付のタスクから表示する
+   */
+  const sortedData = useMemo(() => {
+    return [...(data ?? [])]
+      .filter(
+        (item) => item.taskStatus !== "done"
+      )
+      .sort(
+        (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+      )
+  }, [data]);
 
   /**
    * ①ストアから取得したデータをhooksに渡す（社員名・部署名のみ）
@@ -119,7 +133,7 @@ export const DetailTopComponent = () => {
     <>
       {/** タスク詳細を表示するテーブル */}
       <DetailTable
-        data={data}
+        sortedData={sortedData}
         handleEdit={handleEdit}
         deleteStart={deleteStart} />
 

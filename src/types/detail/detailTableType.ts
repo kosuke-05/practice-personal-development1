@@ -3,7 +3,7 @@
 import { InputTaskType } from "../create/createType";
 
 export type DetailTableType = {
-  data: InputTaskType[],
+  sortedData: InputTaskType[],
   handleEdit: (item: InputTaskType) => void,
   deleteStart: (id: string) => void
 };

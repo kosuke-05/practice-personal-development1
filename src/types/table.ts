@@ -1,5 +1,9 @@
 "use client"
 
+import { Dispatch, SetStateAction } from "react";
+import { InputTaskType } from "./create/createType";
+import { PaginationType } from "./pagination/paginationType";
+
 // 日本語表記に変換するラベル
 export const DepartmentName = {
   sales: "営業部",
@@ -23,3 +27,12 @@ export const TaskPriority = {
 export type DepartmentNameType = keyof typeof DepartmentName;
 export type TaskStatusType = keyof typeof TaskStatus;
 export type TaskPriorityType = keyof typeof TaskPriority;
+
+export type TableType = {
+  tasks: InputTaskType[] | undefined,
+  pageNumber: number,
+  setPageNumber: Dispatch<SetStateAction<number>>,
+  totalPage: number,
+  taskPerPage: number,
+  paginatedData: PaginationType | undefined
+};
