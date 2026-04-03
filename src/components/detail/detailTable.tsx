@@ -13,7 +13,7 @@ import { DetailTableType } from "@/types/detail/detailTableType";
 
 // タスク詳細を表示するテーブル
 export const DetailTable = ({
-  data,
+  sortedData,
   handleEdit,
   deleteStart
 }: DetailTableType) => {
@@ -32,7 +32,7 @@ export const DetailTable = ({
         </TableRow>
       </TableHead>
       <TableBody>
-        {data.map((item) => (
+        {sortedData.map((item) => (
           <TableRow key={item.id}>
             <TableCell>{item.employeeName} / {DepartmentName[item.departmentName as DepartmentNameType]}</TableCell>
             <TableCell>{item.taskName}</TableCell>

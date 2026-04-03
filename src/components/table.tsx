@@ -1,12 +1,12 @@
 "use client"
 
-import { DepartmentName, DepartmentNameType, TaskPriority, TaskPriorityType, TaskStatus, TaskStatusType } from "@/types/table";
+import { DepartmentName, DepartmentNameType, TableType, TaskPriority, TaskPriorityType, TaskStatus, TaskStatusType } from "@/types/table";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useMemo } from "react";
 import { TaskContext } from "@/contexts/context";
 import dayjs from "dayjs";
 import { PaginationComponent } from "./pagination";
@@ -18,15 +18,6 @@ import { InputTaskType } from "@/types/create/createType";
  * ①hooks層を読んでデータを取得
  * ②テーブル上で取得データを展開
  */
-type TableType = {
-  tasks: InputTaskType[] | undefined,
-  pageNumber: number,
-  setPageNumber: Dispatch<SetStateAction<number>>,
-  totalPage: number,
-  taskPerPage: number,
-  paginatedData: PaginationType | undefined
-};
-
 export const TableComponent = ({
   tasks,
   pageNumber,
@@ -51,6 +42,16 @@ export const TableComponent = ({
     ? tasks ?? []
     : paginatedData?.data ?? [];
 
+  // タスク期限が近いタスクから表示
+  const sortedData = useMemo(() => {
+    return [...(getData ?? [])]
+      .filter(
+        (item) => item.taskStatus !== "done")
+      .sort(
+        (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+    );
+  }, [getData]);
+
   return (
     <>
       <Table
@@ -68,7 +69,7 @@ export const TableComponent = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {getData?.map((item) => (
+          {sortedData?.map((item) => (
             <TableRow key={item.id}>
               <TableCell>{item.employeeName} / {DepartmentName[item.departmentName as DepartmentNameType]}</TableCell>
               <TableCell>{item.taskName}</TableCell>
