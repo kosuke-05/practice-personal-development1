@@ -19,6 +19,7 @@
 - モックAPI：MSW
 - バージョン管理：Git / GitHub
 - エラーハンドリング：ErrorBoundary
+- 単体テスト：Vitest
 
 ## 各ページ・ダイアログ情報
 ### ホーム画面
