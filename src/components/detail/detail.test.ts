@@ -15,7 +15,7 @@ const allDoneTasks: InputTaskType[] = [
   {id: "3", taskName: "業務C", taskDescription: "", taskStatus: "done", taskPriority: "middle", dueDate: "2025-01-05", employeeName: "営業三郎", departmentName: "sales"}
 ]
 
-describe("タスクの表示について", () => {
+describe("【単体テスト】タスクの表示について", () => {
   it("完了タスクを省く", () => {
     const result = omitDone(tasks);
 
